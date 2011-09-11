@@ -1,0 +1,49 @@
+# of coords = <%= @coords.length %>
+
+<form action="http://www.cs.tut.fi/cgi-bin/run/~jkorpela/echo.cgi"
+
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAm5_k-vcYlCMqxVOCJY1YfBTjAVqccTNbfE8sRWBOXe-Bz5bSqhRYOQAJ0sFxtENQdkKWT293Nu2qFg" type="text/javascript"></script>
+
+<p>more stuff </p>
+
+
+    <script type="text/javascript">
+
+      alert('in next phase');
+
+      if (GBrowserIsCompatible()) { 
+
+      // A function to create the marker and set up the event window
+      // Dont try to unroll this function. It has to be here for the function closure
+      // Each instance of the function preserves the contends of a different instance
+      // of the "marker" and "html" variables which will be needed later when the event triggers.    
+      function createMarker(point,html) {
+        var marker = new GMarker(point);
+        GEvent.addListener(marker, "click", function() {
+          marker.openInfoWindowHtml(html);
+        });
+        return marker;
+      }
+
+
+     // create some markers
+
+var new_point = null;
+
+var coords_array = null;
+coords_ array = [];
+
+<% @coords.each do |element|  %>
+new_point = new GLatLng( <%= element[0] %> , <%= element[1] %>);
+map.addOverlay(new GMarker(new_point));
+<% end %>
+
+    
+
+}
+    // display a warning if the browser was not compatible
+    else {
+      alert("Sorry, the Google Maps API is not compatible with this browser");
+    }
+    </script>
+
