@@ -3625,3 +3625,55 @@ Processing FirstController#process_file (for 24.16.66.172 at 2011-09-11 16:40:21
   Parameters: {"textline"=>"", "datafile"=>#<ActionController::UploadedStringIO:0x7f3632b47b38>}
 Rendering first/process_file
 Completed in 37ms (View: 25, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 09:46:20) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#process_file (for 127.0.0.1 at 2011-09-11 09:46:33) [POST]
+  Parameters: {"textline"=>"", "datafile"=>""}
+Rendering first/process_file
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/first/process_file]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 09:48:20) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#process_file (for 127.0.0.1 at 2011-09-11 13:43:50) [POST]
+  Parameters: {"textline"=>"", "datafile"=>""}
+Rendering first/process_file
+Completed in 5ms (View: 2, DB: 0) | 200 OK [http://localhost/first/process_file]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 13:45:12) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 13:57:42) [GET]
+Rendering first/index
+Completed in 5ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 13:57:47) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 13:57:49) [GET]
+Rendering first/index
+Completed in 6ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 13:57:51) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-11 13:58:39) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
