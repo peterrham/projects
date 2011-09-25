@@ -3677,3 +3677,19 @@ Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
 Processing FirstController#index (for 127.0.0.1 at 2011-09-11 13:58:39) [GET]
 Rendering first/index
 Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-25 14:48:01) [GET]
+Rendering first/index
+Completed in 3ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#process_file (for 127.0.0.1 at 2011-09-25 14:48:14) [POST]
+  Parameters: {"textline"=>"", "datafile"=>""}
+Rendering first/process_file
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/first/process_file]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2011-09-25 14:52:18) [GET]
+Rendering first/index
+Completed in 3ms (View: 2, DB: 0) | 200 OK [http://localhost/]
