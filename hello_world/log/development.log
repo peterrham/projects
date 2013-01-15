@@ -3784,3 +3784,13 @@ Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:35:5
   Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53aef9050>}
 Rendering first/process_file
 Completed in 7ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#index (for 24.17.213.162 at 2013-01-15 10:49:23) [GET]
+Rendering first/index
+Completed in 45ms (View: 25, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/]
+
+
+Processing FirstController#index (for 24.17.213.162 at 2013-01-15 10:52:59) [GET]
+Rendering first/index
+Completed in 7ms (View: 3, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/]
