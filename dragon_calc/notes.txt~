@@ -1,0 +1,2 @@
+sudo gem install nokogiri
+sudo apt-get install gcc

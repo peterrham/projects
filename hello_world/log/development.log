@@ -3693,3 +3693,94 @@ Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/first/process_file]
 Processing FirstController#index (for 127.0.0.1 at 2011-09-25 14:52:18) [GET]
 Rendering first/index
 Completed in 3ms (View: 2, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-15 09:10:16) [GET]
+Rendering first/index
+Completed in 18ms (View: 15, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-15 09:12:01) [GET]
+Rendering first/index
+Completed in 7ms (View: 3, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-15 09:13:50) [GET]
+Rendering first/index
+Completed in 6ms (View: 3, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing FirstController#index (for 50.57.47.198 at 2013-01-15 09:24:49) [GET]
+Rendering first/index
+Completed in 6ms (View: 3, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/]
+
+
+Processing FirstController#index (for 24.17.213.162 at 2013-01-15 09:24:57) [GET]
+Rendering first/index
+Completed in 6ms (View: 3, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:28:49) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>""}
+Rendering first/process_file
+Completed in 12ms (View: 8, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:29:05) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53affd780>}
+Rendering first/process_file
+Completed in 6ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:30:29) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53af81540>}
+Rendering first/process_file
+Completed in 6ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:32:17) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53af05530>}
+Rendering first/process_file
+Completed in 6ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:33:27) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53ae89110>}
+Rendering first/process_file
+Completed in 7ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:34:36) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53af05670>}
+Rendering first/process_file
+Completed in 7ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:34:59) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53b0e9ea0>}
+Rendering first/process_file
+Completed in 8ms (View: 3, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:35:21) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53b06cc20>}
+Rendering first/process_file
+Completed in 7ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:35:33) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53aff14a8>}
+Rendering first/process_file
+Completed in 7ms (View: 3, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:35:40) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53af74fe8>}
+Rendering first/process_file
+Completed in 7ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
+
+
+Processing FirstController#process_file (for 24.17.213.162 at 2013-01-15 09:35:56) [POST]
+  Parameters: {"textline"=>"foobar", "datafile"=>#<ActionController::UploadedStringIO:0x7fc53aef9050>}
+Rendering first/process_file
+Completed in 7ms (View: 2, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/first/process_file]
