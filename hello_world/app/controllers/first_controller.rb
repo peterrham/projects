@@ -6,6 +6,8 @@ def index
 
   @referer = request.env['HTTP_REFERER']
   @agent = request.env['HTTP_USER_AGENT']
+  @host = request.env['HOST']
+  @date = request.env['DATE']
 end
 
 def is_number?(object)
