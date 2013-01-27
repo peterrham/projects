@@ -3,6 +3,9 @@ require 'csv'
 class FirstController < ApplicationController
 
 def index
+
+  @referer = request.env['HTTP_REFERER']
+  @agent = request.env['HTTP_USER_AGENT']
 end
 
 def is_number?(object)
