@@ -3794,3 +3794,378 @@ Completed in 45ms (View: 25, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-i
 Processing FirstController#index (for 24.17.213.162 at 2013-01-15 10:52:59) [GET]
 Rendering first/index
 Completed in 7ms (View: 3, DB: 0) | 200 OK [http://50-57-47-198.static.cloud-ips.com/]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-27 13:36:31) [GET]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-27 13:36:31) [GET]
+
+
+MissingSourceFile (no such file to load -- sqlite3):
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/monitor.rb:242:in `synchronize'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_specification.rb:121:in `retrieve_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_specification.rb:113:in `connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/query_cache.rb:8:in `cache'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `process_without_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/session_management.rb:134:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:392:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:184:in `handle_request'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:112:in `dispatch_unlocked'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:125:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `synchronize'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:134:in `dispatch_cgi'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:41:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:103:in `handle_dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:74:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:60:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/servers/webrick.rb:66
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/server.rb:49
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    ./server:3
+
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_trace (57.2ms)
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_request_and_response (1.8ms)
+Rendering /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-27 13:39:38) [GET]
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-27 13:39:38) [GET]
+
+
+MissingSourceFile (no such file to load -- sqlite3):
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/kernel/requires.rb:7:in `require_library_or_gem'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/kernel/reporting.rb:11:in `silence_warnings'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/kernel/requires.rb:5:in `require_library_or_gem'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/sqlite3_adapter.rb:10:in `sqlite3_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:223:in `new_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:245:in `checkout_new_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:188:in `checkout'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `loop'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:184:in `checkout'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/monitor.rb:242:in `synchronize'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:183:in `checkout'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:98:in `connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_pool.rb:326:in `retrieve_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_specification.rb:121:in `retrieve_connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/connection_specification.rb:113:in `connection'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/query_cache.rb:8:in `cache'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `process_without_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/session_management.rb:134:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:392:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:184:in `handle_request'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:112:in `dispatch_unlocked'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:125:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `synchronize'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:134:in `dispatch_cgi'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:41:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:103:in `handle_dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:74:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:60:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/servers/webrick.rb:66
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/server.rb:49
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    ./server:3
+
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_trace (93.9ms)
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_request_and_response (0.7ms)
+Rendering /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing FirstController#index (for 127.0.0.1 at 2013-01-27 13:41:42) [GET]
+Rendering first/index
+Completed in 24ms (View: 22, DB: 0) | 200 OK [http://0.0.0.0/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:42:23) [GET]
+Rendering first/index
+Completed in 3ms (View: 2, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:49:14) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:50:00) [GET]
+Rendering first/index
+Completed in 4ms (View: 3, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:56:47) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:57:00) [GET]
+Rendering first/index
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:57:30) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:57:34) [GET]
+Rendering first/index
+Completed in 5ms (View: 3, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 13:57:55) [GET]
+Rendering first/index
+
+
+ActionView::TemplateError (You have a nil object when you didn't expect it!
+The error occurred while evaluating nil.env) on line #14 of app/views/first/index.erb:
+11: 
+12: <%=1+1 %>
+13: <p>
+14: <%= @request.env['HTTP_REFERER'] %>
+15: <p>
+16: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+17: <html>
+
+    app/views/first/index.erb:14
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/renderable.rb:39:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/renderable.rb:39:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/template.rb:73:in `render_template'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/base.rb:256:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:1177:in `render_for_file'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:896:in `render_without_benchmark'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:868:in `render_without_benchmark'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:1251:in `default_render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:1257:in `perform_action_without_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:617:in `call_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/query_cache.rb:8:in `cache'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `process_without_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/session_management.rb:134:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:392:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:184:in `handle_request'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:112:in `dispatch_unlocked'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:125:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `synchronize'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:134:in `dispatch_cgi'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:41:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:103:in `handle_dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:74:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:60:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/servers/webrick.rb:66
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/server.rb:49
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    server:3
+
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_trace (94.3ms)
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_request_and_response (0.7ms)
+Rendering /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 14:00:25) [GET]
+Rendering first/index
+Completed in 4ms (View: 3, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 14:01:06) [GET]
+Rendering first/index
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 14:01:51) [GET]
+Rendering first/index
+
+
+ActionView::TemplateError (undefined local variable or method `referer' for #<ActionView::Base:0xb67d3744>) on line #14 of app/views/first/index.erb:
+11: 
+12: <%=1+1 %>
+13: <p>
+14: <%= referer == @referer %>
+15: <p>
+16: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+17: <html>
+
+    app/views/first/index.erb:14
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/renderable.rb:39:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/renderable.rb:39:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/template.rb:73:in `render_template'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_view/base.rb:256:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:1177:in `render_for_file'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:896:in `render_without_benchmark'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:868:in `render_without_benchmark'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/core_ext/benchmark.rb:8:in `realtime'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:51:in `render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:1251:in `default_render'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:1257:in `perform_action_without_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:617:in `call_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:610:in `perform_action_without_benchmark'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/benchmark.rb:293:in `measure'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/benchmarking.rb:68:in `perform_action_without_rescue'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/rescue.rb:136:in `perform_action_without_caching'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/caching/sql_cache.rb:13:in `perform_action'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/connection_adapters/abstract/query_cache.rb:34:in `cache'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activerecord-2.2.3/lib/active_record/query_cache.rb:8:in `cache'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/caching/sql_cache.rb:12:in `perform_action'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `send'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:524:in `process_without_filters'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/filters.rb:606:in `process_without_session_management_support'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/session_management.rb:134:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/base.rb:392:in `process'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:184:in `handle_request'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:112:in `dispatch_unlocked'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:125:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `synchronize'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:124:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:134:in `dispatch_cgi'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/dispatcher.rb:41:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:103:in `handle_dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:74:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/1.8/webrick/server.rb:82:in `start'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/webrick_server.rb:60:in `dispatch'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/servers/webrick.rb:66
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:521:in `new_constants_in'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/activesupport-2.2.3/lib/active_support/dependencies.rb:153:in `require'
+    /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/rails-2.2.3/lib/commands/server.rb:49
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+    /home/peterham/.rvm/rubies/ruby-1.8.7-p371/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:36:in `require'
+    server:3
+
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_trace (31.3ms)
+Rendered /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/_request_and_response (0.8ms)
+Rendering /home/peterham/.rvm/gems/ruby-1.8.7-p371/gems/actionpack-2.2.3/lib/action_controller/templates/rescues/layout.erb (internal_server_error)
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 14:02:34) [GET]
+Rendering first/index
+Completed in 5ms (View: 3, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#index (for 192.168.1.24 at 2013-01-27 14:04:11) [GET]
+Rendering first/index
+Completed in 3ms (View: 2, DB: 0) | 200 OK [http://192.168.1.29/]
+
+
+Processing FirstController#process_file (for 192.168.1.24 at 2013-01-27 14:04:51) [POST]
+  Parameters: {"textline"=>"", "datafile"=>#<ActionController::UploadedStringIO:0xb676639c>}
+Rendering first/process_file
+Completed in 37ms (View: 35, DB: 0) | 200 OK [http://192.168.1.29/first/process_file]
+
+
+Processing FirstController#process_file (for 192.168.1.24 at 2013-01-27 14:05:59) [POST]
+  Parameters: {"textline"=>"", "datafile"=>#<ActionController::UploadedStringIO:0xb672d72c>}
+Rendering first/process_file
+Completed in 2ms (View: 1, DB: 0) | 200 OK [http://192.168.1.29/first/process_file]
