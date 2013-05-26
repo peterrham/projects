@@ -26,3 +26,19 @@ browser is workint *at all*! Or for showing a beginning html author
 intimidated by correct html syntax with "funny characters".
 
 
+./test.txt
+
+I actually have no idea what this file is for. This file simply
+contains some kind of unique identifier:
+
+6a193867-aefe-11e2-a661-ff378497d577
+
+I should probably delete this file, but I'm putting it under version
+control, just in case ....
+
+./hello_world.rhtml
+
+A trivial ruby embedded ruby (erb) file to show how to write a quick
+Ruby webserver for a small project. I think that this works outside of
+Ruby on Rails, but do not remember for sure.
+
