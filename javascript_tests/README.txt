@@ -125,6 +125,11 @@ html window. I'm not exactly sure why it works, but it shows that a
 table can help with this, although javascript seems to be the most
 simple way.
 
+./htm5_canvas_example.html
+
+This is an html5 example of using a canvas and java script.  This test
+  also logs to the javascript console.
+
 Here follows, a list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt

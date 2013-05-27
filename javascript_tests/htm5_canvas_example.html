@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<!-- This is an html5 example of using a canvas and java script.
+  This test also logs to the javascript console.
+  -->
+
+<head>
+
+</head>
+
+<body>
+
+<canvas id="example" width="200" height="300">
+
+Display this if your browser does not support html5.
+
+</canvas>
+
+<script>
+  var c=document.getElementById('example');
+  var ctx=c.getContext("2d");
+  ctx.fillStyle="BurlyWood";
+  ctx.fillRect(0,0,150,75);
+  console.log("javascript console");
+  var seconds = new Date().getTime() / 1000;
+  console.log(seconds);
+</script>
+
+</body>
