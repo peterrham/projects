@@ -128,7 +128,15 @@ simple way.
 ./htm5_canvas_example.html
 
 This is an html5 example of using a canvas and java script.  This test
-  also logs to the javascript console.
+also logs to the javascript console. I should have named this "html5"
+instead of "htm5". That was a typographical error. I will fix that
+once I learn how to rename a file in GIT.
+
+./html_full_window_div.html
+
+This file is an example of how to set the size of a div element to be
+the size of the entire window, without javascript. This seems pretty
+useful.
 
 Here follows, a list of not so useful files, possibly should be deleted:
 

@@ -1,0 +1,43 @@
+
+<!-- 
+     This example demonstrates a div elment that consumes the entire window real estate and still retails a border.
+  -->
+
+<html>
+  <head>
+    <style type='text/css'>
+      body {
+      text-align: center;
+      }
+      #maintable, #header, #content, #footer {
+      border: 5px solid black;
+      text-align: center;
+      }
+      #header, #footer {
+      height: 25px;
+      }
+      #content {
+      vertical-align: center;
+      }
+      #maintable {
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      top: 0px;
+      }
+    </style>
+  </head>
+  <body style="background-color:BurlyWood;">
+    Body Element Start
+    <p>
+      <div id='maintable' style="background-color:Gray">
+        <div id='header' style="background-color:Red;">
+	  Header Div
+	</div>
+        <div id='footer' style="background-color:Yellow;">
+	  Footer Div</div>
+      </div>
+      Body Element End
+  </body>
+</html>
