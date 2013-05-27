@@ -113,7 +113,12 @@ This experiment only gets part of the way there. It's able to set the
 height, left, and right of div elements, but not quite able to utilize
 the 100% width and 100%. Should I be explicit about using html5?
 
-A list of not so useful files, possibly should be deleted:
+./html_fragements.html
+
+A buffer of text that include html fragments that are moving in and
+out of files and may be useful in the future.
+
+Here follows, a list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt
 
