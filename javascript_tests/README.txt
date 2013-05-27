@@ -99,7 +99,9 @@ near my home in Mercer Island.
 ./javascript_set_window_location.html
 
 This html with javascript sets the html window to the root document of
-the current web server.
+the current web server. This one is interesting in that if you hit the
+"back" button, you still get redirected to the root document and never
+actually see this document itself.
 
 A list of not so useful files, possibly should be deleted:
 
@@ -108,3 +110,5 @@ A list of not so useful files, possibly should be deleted:
 This is a sequence of stops from optimap. A free google maps based
 sequencer. Probably can delete this one. Let's see.
 
+Notes: testing placing my username and password in my .git/config file
+for the local repository.
