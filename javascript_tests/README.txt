@@ -96,3 +96,15 @@ evaluation and map display programs. This file currently has 0,0
 (useful? Some where near Africa) and some Seattle locations, probably
 near my home in Mercer Island.
 
+./javascript_set_window_location.html
+
+This html with javascript sets the html window to the root document of
+the current web server.
+
+A list of not so useful files, possibly should be deleted:
+
+./from_optimap_trimmed.txt
+
+This is a sequence of stops from optimap. A free google maps based
+sequencer. Probably can delete this one. Let's see.
+
