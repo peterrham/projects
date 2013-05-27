@@ -1,0 +1,40 @@
+<head>
+
+<!-- I'm not 100% sure what this div html element test is trying to
+achieve. 
+
+Key atributes are: 
+- an absolute height of the "header" div.
+- a left and right of the "main_panel" relative to the enclosing element (window?).
+- I'm not sure how relevant the 100% height and 100% width attribute are. They seem to be ignored.
+- The movitation for all of this is a google maps canvas that takes up the entire width and
+- available height of the window and resizes when the window does.
+-->
+
+<style type='text/css'>
+#header {
+height: 100px;
+text-align: center;
+background-color:LemonChiffon;
+}
+
+#main_panel {
+position: absolute;
+left: 50px;
+right: 500px;
+}
+</style>
+
+</head>
+
+<body style="background-color:lightgray">
+
+<div id='header'>
+This is the div called "header".
+</div>
+
+<div id='main_panel' style="text-align:center;background-color:White;height:100%:width:100%">
+This is the div called "main_panel".
+</div>
+
+</body>

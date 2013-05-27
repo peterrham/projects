@@ -103,6 +103,16 @@ the current web server. This one is interesting in that if you hit the
 "back" button, you still get redirected to the root document and never
 actually see this document itself.
 
+./div_fixed_height_left_right.html
+
+This html experiments with divs, eventually, to achieve a google maps
+canvas that uses up the entire window and resizes when the window
+resizes. 
+
+This experiment only gets part of the way there. It's able to set the
+height, left, and right of div elements, but not quite able to utilize
+the 100% width and 100%. Should I be explicit about using html5?
+
 A list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt
@@ -112,3 +122,7 @@ sequencer. Probably can delete this one. Let's see.
 
 Notes: testing placing my username and password in my .git/config file
 for the local repository.
+
+Scrap (to be deleted later)
+
+url = https://peterrham:peterham1@github.com/peterrham/projects.git
