@@ -42,3 +42,6 @@ A trivial ruby embedded ruby (erb) file to show how to write a quick
 Ruby webserver for a small project. I think that this works outside of
 Ruby on Rails, but do not remember for sure.
 
+It is a bit confusing that this file has the same name, but different
+extension than ./hello_word.html. I will fix that when I learn git a
+bit better and know how to rename files safely.
