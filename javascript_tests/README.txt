@@ -118,6 +118,13 @@ the 100% width and 100%. Should I be explicit about using html5?
 A buffer of text that include html fragments that are moving in and
 out of files and may be useful in the future.
 
+./html_table_full_height_and_width.html
+
+This table takes up the full width and much of the full height of the
+html window. I'm not exactly sure why it works, but it shows that a
+table can help with this, although javascript seems to be the most
+simple way.
+
 Here follows, a list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt

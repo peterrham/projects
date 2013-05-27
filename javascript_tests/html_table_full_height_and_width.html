@@ -1,0 +1,51 @@
+<html>
+
+  <!-- This experiment demonstrates a table that somehow takes up most
+       of the height and width of the html page using the 100% width
+       and 100% height attributes. I'm not sure why it works, since
+       the enclosing elements are not 100% width and height unless
+       they are the defaults?
+    -->
+
+  <head>
+    <style type='text/css'>
+
+      #main_table {
+      background-color: yellow;
+      border: 20px solid gray;
+      width: 100%;
+      height: 100%;
+      left: 0px;
+      top: 0px;
+      }
+
+    </style>
+  </head>
+  <body style="text-align:center;background-color:LemonChiffon;">
+    html 'body' element start
+    <table id='main_table'>
+
+      <tr>
+	<td style="background-color:green;text-align:center;"> Table header cell (not inside a div) </td>
+      </tr>
+
+      <tr>
+	<td style="background-color:tan;text-align:center;">
+
+	  <div >
+
+	    Table content cell (inside a div)
+
+	</div>
+
+	</td>
+
+      </tr>
+
+    </table>
+
+    html 'body' element end (not visible for some reason)
+
+  </body>
+
+</html>
