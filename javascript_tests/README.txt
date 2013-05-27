@@ -138,6 +138,11 @@ This file is an example of how to set the size of a div element to be
 the size of the entire window, without javascript. This seems pretty
 useful.
 
+./html_table_consume_height.html
+
+An example where a table row can consume all the remaining vertical
+space in a window.
+
 Here follows, a list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt
