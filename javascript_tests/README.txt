@@ -158,6 +158,16 @@ current directory, but no actual javascript executed yet.
 
 This is an example of javascript setting html to a timestamp.
 
+./html_div_experiment.html
+
+This test html file is part of a long saga to get a google map
+"canvas" to fill the entire window. It is probably futile and will
+instead require javascript instead of pure html, but this was an
+attempt.
+
+This example is complex and does not achieve the goal, but who know's,
+maybe it will be a useful reference.
+
 Here follows, a list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt
