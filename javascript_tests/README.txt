@@ -143,6 +143,15 @@ useful.
 An example where a table row can consume all the remaining vertical
 space in a window.
 
+./jquery_hello_world.html
+
+Trivial of loading the standard jquery javascript library from the
+current directory, but no actual javascript executed yet.
+
+./javascript_event_example.html
+
+This is an example of javascript setting html to a timestamp.
+
 Here follows, a list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt

@@ -1,0 +1,43 @@
+
+<!-- 
+     This is an example of javascript setting html to a timestamp.
+-->
+
+<html>
+<body>
+<pre>
+
+<div id="timestamp">
+</div>
+
+<script>
+
+  var id = "timestamp";
+
+  var timestamp = document.getElementById(id);
+
+  //  alert(timestamp);
+
+  console.log("logging ...");
+
+  console.log(the_child);
+
+  var the_type = typeof the_child;
+
+  console.log(the_type);
+
+  var the_child = timestamp.firstChild;
+
+  if (the_type === "undefined") {
+      console.log("is undefined ...");
+      timestamp.appendChild(document.createTextNode(new Date().toString()));
+  } else {
+      console.log("*not* undefined ...");
+  }
+
+  timestamp.onclick = function() {this.innerHTML = new Date().toString()};
+
+</script>
+</pre>
+</body>
+</html>
