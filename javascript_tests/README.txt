@@ -143,6 +143,12 @@ useful.
 An example where a table row can consume all the remaining vertical
 space in a window.
 
+./html5_canvas_full_window.html
+
+Using an html5 canvas to consume the full window width. It mostly
+works, but not quite, not sure why.
+
+
 ./jquery_hello_world.html
 
 Trivial of loading the standard jquery javascript library from the
