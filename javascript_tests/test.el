@@ -102,7 +102,9 @@
 	      (setq comint-prompt-regexp "^[ \n\t]*[$] ?"))))
 
 
-(insert (getenv "HOME"))C:\Users\peterham\AppData\Roaming
+(insert (getenv "HOME"))
+
+; C:\Users\peterham\AppData\RoamingC:\Users\peterham\AppData\Roaming
 
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
