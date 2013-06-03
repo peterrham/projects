@@ -1,0 +1,112 @@
+<html>
+
+<!--
+
+    Here's an example of using a table where one of the rows is a google maps canvas.
+    The idea is that the table expands to the full width and height of the html window.
+    The google maps canvas row also expands to the width and height of the table, except:
+    there are header and footer rows which are fixed height, but full width.
+
+    The keys to this are:
+
+    1) Set the height:100%; of the table itself.
+    2) Set the height:100%; of the google maps 'td' html element.
+    3) Explicity set the height of the other tables rows, for example height:10px;
+
+-->
+
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps Full Window Table Row</title>
+
+    <script 
+src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyCE811cbKvawKNa1Qi7iYnU3RqKRVKroKs&sensor=false"
+       type="text/javascript">
+
+    </script>
+    
+    <script type="text/javascript">
+
+    function initialize() {
+
+    if (GBrowserIsCompatible()) {
+    
+    var map = new GMap2(document.getElementById("td_element_canvas"));
+
+    map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+    map.setUIToDefault();
+      }
+    }
+
+    </script>
+
+    <style type ='text/css'>
+
+      #main_table {
+      background-color: BurlyWood;
+      border: 30px solid black;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      vertical-align: center;
+      }
+
+      #map_canvas {
+      background-color: Gray;
+      vertical-align: center;
+      text-align: center;
+      width:100%;
+      height:100%;
+      }
+    </style>
+
+  </head>
+
+  <body onload="initialize()" onunload="GUnload()">
+    
+<table id="main_table">
+
+<tr style="height:30px">
+
+<td style="background-color:purple">      
+Header Row Table Cell
+</td>
+
+</tr>
+
+<tr style="height:20px">
+<td>    
+
+  <div id="header"> 
+
+    First Body Row 'Header' div, table cell
+
+  </div>
+
+</td>
+</tr>
+
+<tr>
+
+<!-- Would it be possible to just use the table row itself? A div inside the table td element does not seem to work. -->
+
+<td id="td_element_canvas" style="background-color:GoldenRod">
+  'td' element waiting for a google maps canvas
+</td>
+
+</tr>
+
+<tr style="background-color:Red;height:30px">
+<td style="background-color:Green">
+  Table element
+    <div id="map_canvas">
+      Div ready to be a possible google maps canvas
+ </div>
+</td>
+</tr>
+
+</table>
+
+  </body>
+</html>

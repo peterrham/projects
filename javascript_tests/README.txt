@@ -168,6 +168,22 @@ attempt.
 This example is complex and does not achieve the goal, but who know's,
 maybe it will be a useful reference.
 
+./gmaps_full_window_table.html
+
+The comment from the file:
+
+    Here's an example of using a table where one of the rows is a google maps canvas.
+    The idea is that the table expands to the full width and height of the html window.
+    The google maps canvas row also expands to the width and height of the table, except:
+    there are header and footer rows which are fixed height, but full width.
+
+    The keys to this are:
+
+    1) Set the height:100%; of the table itself.
+    2) Set the height:100%; of the google maps 'td' html element.
+    3) Explicity set the height of the other tables rows, for example height:10px;
+
+
 Here follows, a list of not so useful files, possibly should be deleted:
 
 ./from_optimap_trimmed.txt
