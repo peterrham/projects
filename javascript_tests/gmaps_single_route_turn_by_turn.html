@@ -20,11 +20,19 @@
      a free account. This program tries to gracefully utilize the all
      the capacity allowed and report when it has.
 
+     The directions service query limit seems to be 10 within a
+     certain amount of time. We could throttle it based on time
+     perhaps.
+
      One objective of this web app is to generate driving time and
      driving distance metrics for a route in order to compare routes
      and route sequences.
 
+     This code uses "promises" in order to execute asynchronously in a
+     clean and systematic way. It's confusing however!
+
 -->
+
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -33,6 +41,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
     <script type="text/javascript" src="jquery.js"></script>          
+
+    <script type="text/javascript" src="moment.js"></script>          
+
+    <script type="text/javascript" src="javascript_utilities.js"></script>          
 
     <script>
 
@@ -118,7 +130,8 @@ function handleNoGeolocation(errorFlag) {
 function
 noGeolocation()
 {
-    console.log("noGeolocation(): called");
+
+    logConsoleEvent("noGeolocation(): called");
     handleNoGeolocation(browserSupportFlag);
 }
 
@@ -127,11 +140,11 @@ function currentLocationPromise()
     var dfd = $.Deferred();
 
     if (navigator.geolocation) {
-        console.log("geolocation:YES");
+            logConsoleEvent("geolocation:YES");
 
 	navigator.geolocation.getCurrentPosition(
 	    function(position) {
-		console.log("currentLocationPromise(): got it!");
+		logConsoleEvent("currentLocationPromise(): got it!");
 		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 		map.setCenter(initialLocation);
 	    }, 
@@ -139,19 +152,19 @@ function currentLocationPromise()
 	);
 
     } else{
-        console.log("geolocation:NO");
+        logConsoleEvent("geolocation:NO");
     }
 
 }
 
 function geocodePromise(address){
-    console.log("geocodePromise()");
+    logConsoleEvent("geocodePromise()");
 
     var dfd = $.Deferred();
     
     geocoder.geocode( { 'address': address}, function(results, status) {
 
-	console.log("before calling resolve");
+	logConsoleEvent("before calling resolve");
 
 	
 	if (status == google.maps.GeocoderStatus.OK) {
@@ -159,7 +172,7 @@ function geocodePromise(address){
 	    theLocation = results[0].geometry.location;
 
 
-	    console.log("location = " + theLocation);
+	    logConsoleEvent("location = " + theLocation);
 
             var marker = new google.maps.Marker({
 		map: map,
@@ -186,7 +199,7 @@ function geocodePromise(address){
 
 function codeAddress() {
 
-    console.log("codeAddress()");
+    logConsoleEvent("codeAddress()");
 
     var address = "4717 89th Avenue, SE, Mercer Island, WA 98040";
 
@@ -209,34 +222,47 @@ var homeLocation;
 var directionsDisplay;
 
 function initialize() {
+						   
+    logConsoleEvent("initialize():");
+
     directionsDisplay = new google.maps.DirectionsRenderer();
 
+    // XXX global variable
     geocoder = new google.maps.Geocoder();
 
     var chicago = new google.maps.LatLng(41.850033, -87.6500523);
 
     var mapOptions = {
-        zoom: 11,
+      zoom: 11,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        center: chicago
+        center: chicago,
+	zoomControl: true,
+  panControl: true,
+  zoomControl: true,
+  mapTypeControl: true,
+  scaleControl: true,
+  streetViewControl: true,
+  overviewMapControl: true
+
     }
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
     directionsDisplay.setMap(map);
 
     if (navigator.geolocation) {
-        console.log("geolocation:YES");
+        logConsoleEvent("geolocation:YES");
 
 	navigator.geolocation.getCurrentPosition(
 	    function(position) {
-		console.log("got the browser geo code location!");
+		logConsoleEvent("got the browser geo code location!");
 		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-		map.setCenter(initialLocation);
+	map.setCenter(initialLocation);
 	    }, 
 	    noGeolocation
 	);
 
     } else{
-        console.log("geolocation:NO");
+        logConsoleEvent("geolocation:NO");
     }
 
     codeAddress();
@@ -248,23 +274,23 @@ function initialize() {
     /*
       geocodePromise(mom).done(
       function(x)  {
-      console.log('mom is done!');
-      console.log('mom is ' + x);
+      logConsoleEvent('mm is done!');
+      logConsoleEvent('mom is ' + x);
       momLocation = x;
       }
       );
 
       geocodePromise(home).done(
       function(x)  {
-      console.log('home is done!');
-      console.log('home is ' + x);
+      logConsoleEvent('home is done!');
+      logConsoleEvent('home is ' + x);
       homeLocation = x;
       }
       );
 
       $.when(geocodePromise(mom), geocodePromise(home))
       .then(function (result){
-      console.log('result = ' + result);
+      logConsoleEvent('result = ' + result);
       });
     */
 
@@ -272,8 +298,8 @@ function initialize() {
 	.then(function (result) { momLocation = result; return geocodePromise(home);})
 	.then(function (result) { homeLocation = result; return geocodePromise(mom);})
 	.then(function (result) { 
-	    console.log("momLocation = " + momLocation);
-	    console.log("homeLocation = " + homeLocation);});
+	    logConsoleEvent("momLocation = " + momLocation);
+	    logConsoleEvent("homeLocation = " + homeLocation);});
 }
 
 function 
@@ -287,8 +313,8 @@ min (x, y)
 function
 dumpDirectionsResponse(response)
 {
-    console.log("dumpDirectionsResponse()");
-    console.log("my object: %o", response);
+    logConsoleEvent("dumpDirectionsResponse()");
+    logConsoleEvent("my object: %o", response);
 
     var routes=response.routes.length;
     var legs;
@@ -305,8 +331,8 @@ dumpDirectionsResponse(response)
                 paths=response.routes[i].legs[j].steps[k].path.length;
 		for(m=0;m<paths;m++){
 		    path = response.routes[i].legs[j].steps[k].path[m];
-		    console.log("path: %o", path);
-		    console.log("path as string: %s", path.toString());
+		    logConsoleEvent("path: %o", path);
+		    logConsoleEvent("path as string: %s", path.toString());
 		}
 	    }
 	}
@@ -324,13 +350,13 @@ drawDirectionsPolyline(i, n, result)
     });
 
     if (!result) {
-	console.log("result is *NULL*");
+	logConsoleEvent("result is *NULL*");
 	return;
     }
 
     if (result.routes != null) {
     } else {
-	console.log("routes is *NULL*");
+	logConsoleEvent("routes is *NULL*");
 	return;
     }
 
@@ -361,7 +387,7 @@ drawDirectionsPolyline(i, n, result)
     // decide to draw the destination or not, since we are doing this in a loop
 
     if (i == (n - 2)) {
-	console.log("last one");
+	logConsoleEvent("last one");
 	var marker = new google.maps.Marker({
 	    map: map,
 	    position: leg.end_location
@@ -374,152 +400,67 @@ drawDirectionsPolyline(i, n, result)
 }
 
 function
-newCalcRoutePromise(i, totalLength, start, end)
+newCalcRoutePromise(i, totalLength, startLocation, endLocation)
 {
     var dfd = $.Deferred();
 
+    logConsoleEvent("newCalcRoutePromise(): startLocation == " + startLocation);
+
+    logConsoleEvent("newCalcRoutePromise(): endLocation == " + endLocation);
+
+    if (startLocation === undefined) {
+			    logConsoleEvent("startLocation undefined");
+			    return;
+
+}
+
+    if (endLocation === undefined) {
+			    logConsoleEvent("endLocation undefined");
+			    return;
+
+}
     var request = {
-        origin: start,
-        destination: end,
+        origin: startLocation,
+        destination: endLocation,
         travelMode: google.maps.DirectionsTravelMode.DRIVING
     };
 
+    // XXX This is tricky, combining deferred's and timeouts
+    // The purpose of this is to throttle, but it probably won't if everything goes in parallel
+    // but I guess that promises prevent that? Will I get a rush all at once if the timers
+   // all expire at the same time? I will also be breaking the directions into segments
+   // in order to call the api less times
+			    
+    setTimeout(function() {
+
     directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-	    console.log("status == *OK*");
-	    console.log("i == " + i.toString());
+	    logConsoleEvent("status == *OK*");
+	    logConsoleEvent("directionsService callback(): i == " + i.toString());
 	    drawDirectionsPolyline(i, totalLength, response);
+	    logConsoleEvent("after calling Polyline()");
 	} else {
-	    console.log("status == *ERROR*");
-	    console.log("status == " + status.toString());
+
+            var summaryPanel = document.getElementById('directions_panel');
+	    summaryPanel.innerHTML += ("\n" + status);
+			    // + status;
+	    logConsoleEvent("status == *ERROR*");
+	    logConsoleEvent("status == " + status.toString());
 	}
 	dfd.resolve();
-    });
+    })}, 2000);
 
     return dfd.promise();
 }
 
-function 
-calcRoute() {
+</script>
 
-    var summaryPanel = document.getElementById('directions_panel');
-    summaryPanel.innerHTML = '... trying to calculate ...';
-
-    var waypts = [];
-
-    var lines = document.listOfLocations.inputList.value;
-
-    //      alert(lines);
-
-    my_lines = lines.split(/\n/); 
-
-    // strip out the empty lines
-
-    old_mylines = my_lines;
-    my_lines = [];
-
-    for (var i in old_mylines) {
-	var the_line = old_mylines[i];
-	console.log("*");
-	console.log(the_line)
-	if (old_mylines[i].length > 0) {
-	    my_lines.push(old_mylines[i]);
-	}
-	
-    }
-
-    var max_gmaps_waypoints = 9;
-
-    n = my_lines.length;
-
-    // alert(n);
-
-    //      alert(my_lines);
-    if (n < 2) {
-	alert('Need at least two addresses!');
-    } else {
-
-
-        var start = my_lines[0];
-        var end = my_lines[n-1];
-
-	// XXX refactoring this function
-
-	if (true) {
-	    var totalLength = my_lines.length;
-
-	    for (var i = 0; i < (totalLength - 1); i++) {
-		console.log("i == " + i.toString());
-		newCalcRoutePromise(i, totalLength, my_lines[i], my_lines[i+1]);		
-	    }
-	    return;
-	}
-
+<!-- XXX, I wish I could manage these javascript files better so that they included each other ....
+-->
     
-	var last_address_index = min(max_gmaps_waypoints, n - 1);
+    <script type="text/javascript" src="./jquery_throttle_test_script.js"></script>          
+    <script type="text/javascript" src="./gmaps_calc_route.js"></script>          
 
-	for (var i in my_lines) {
-	    //      alert(my_lines[i]);
-	    if (i > 0 && i < max_gmaps_waypoints) {
-		waypts.push({location:my_lines[i], stopover:true});
-		console.log(my_lines[i]);
-
-	    }
-	}
-
-	if (waypts.length > max_gmaps_waypoints) {
-	    summaryPanel.innerHTML = '<b>too many addresses, max is 9!... ' + '</b><br>';
-	    summaryPanel.innerHTML += my_lines.length;
-	    return;
-	}
-        var request = {
-            origin: start,
-            destination: end,
-            waypoints: waypts,
-            optimizeWaypoints: false,
-            travelMode: google.maps.DirectionsTravelMode.DRIVING
-        };
-
-        directionsService.route(request, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-
-		if (false) dumpDirectionsResponse(response);
-
-		if (true) drawDirectionsPolyline(response);
-
-		if (false) directionsDisplay.setDirections(response);
-
-		var route = response.routes[0];
-		var summaryPanel = document.getElementById('directions_panel');
-		summaryPanel.innerHTML = '';
-
-		var totalMins = 0;
-		// For each route, display summary information.
-		for (var i = 0; i < route.legs.length; i++) {
-		    var routeSegment = i + 1;
-
-		    summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-		    summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		    summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		    summaryPanel.innerHTML += route.legs[i].distance.text + '<br>';
-		    summaryPanel.innerHTML += route.legs[i].duration.text + '<br>';
-		    totalMins += route.legs[i].duration.value;
-		}
-
-		summaryPanel.innerHTML += 'Total minutes = ' + totalMins / 60 + '<br>';
-
-	    } else {            
-
-		var summaryPanel = document.getElementById('directions_panel');
-		summaryPanel.innerHTML = '... directions failed! ....';
-	    }
-	}
-			       );
-
-    }
-}
-				
-    </script>
   </head>
   <body onload="initialize()">
     <div id="map-canvas" style="float:left;width:70%;height:100%;"></div>
@@ -530,7 +471,7 @@ calcRoute() {
     </div> 
 
     <form name="listOfLocations">
-  <textarea name="inputList" rows="10" cols="70">Bellevue, WA&#013;&#010;Mercer Island, WA&#013;&#010;Seattle, WA</textarea><br>
+      <textarea name="inputList" rows="10" cols="70">Bellevue, WA&#013;&#010Mercer Island, WA&#013;&#010;Seattle, WA</textarea><br>
   </form>
     <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
     </div>

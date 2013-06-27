@@ -1,0 +1,43 @@
+
+<html>
+
+<!-- test how jquery deferreds work with timers -->
+
+
+<head>
+
+<script type="text/javascript" src="jquery.js"></script>          
+
+ <script type="text/javascript">                                         
+
+function
+logConsoleEvent(str)
+{
+    var theDate = new Date();
+
+    console.log(theDate.toString() + ": " + theDate.getTime() + ": " + str);
+
+}
+    function 
+    deferredTimeout(theSeconds, theStr) 
+    {
+      var dfd = $.Deferred();
+	
+	setTimeout(function() {
+	    logConsoleEvent(theStr);
+	    dfd.resolve();
+	},
+		   theSeconds * 1000);
+
+	return dfd.promise();
+    }
+		
+   var doit = deferredTimeout(3, "first timeout");
+
+doit.then(function() { return deferredTimeout(2, "second timeout");}).then(function() { return deferredTimeout(2, "third timeout");});
+
+ </script>                                                               
+
+</head>
+
+</html>

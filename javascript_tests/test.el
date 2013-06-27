@@ -1,4 +1,5 @@
-
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-c\C-m" 'execute-extended-command)
 
 (setq shell-file-name 'nil)
 
@@ -102,7 +103,7 @@
 	      (setq comint-prompt-regexp "^[ \n\t]*[$] ?"))))
 
 
-(insert (getenv "HOME"))
+; (insert (getenv "HOME"))C:\Users\peterham\AppData\RoamingC:\Users\peterham\AppData\Roaming
 
 ; C:\Users\peterham\AppData\RoamingC:\Users\peterham\AppData\Roaming
 
@@ -121,3 +122,6 @@
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 ; C:\Users\peterham\AppData\RoamingC:\Users\peterham\AppData\Roaming
+
+; very important to solve hangs/delays on windows!
+(setq w32-get-true-file-attributes nil)

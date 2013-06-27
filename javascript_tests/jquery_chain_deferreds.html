@@ -1,0 +1,35 @@
+
+    <html>
+
+    <!-- test how jquery deferreds work with timers -->
+
+
+    <head>
+
+    <script type="text/javascript" src="jquery.js"></script>          
+
+    <script type="text/javascript" src="javascript_utilities.js"></script>          
+
+    <script type="text/javascript">                                         
+
+
+
+
+
+var prev_deferred;
+
+for (var i=0;i<10;i++){
+
+    if (i != 0) {
+	prev_deferred = prev_deferred.then(wrappedDeferred(2, i.toString()));
+    }
+    else {
+	prev_deferred = deferredTimeout(2, i.toString());
+    }
+}
+
+</script>                                                               
+
+</head>
+
+</html>
