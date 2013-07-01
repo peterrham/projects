@@ -217,16 +217,6 @@ executeFunctionArray(arr)
 function
 executeFunctionArrayAsynch(arr)
 {
-    // XXX This is a hack to place this here. It should be passed in, but
-    // not fixing for now.
-    
-    // XXX Empirically 500ms works with gmaps. A more sophisticated
-    // mechanism might use some math or feedback to exponential
-    // backoff or intelligently rate limit. Or we could run as fast as
-    // possible and then start backing off after gmaps complains
-
-    var MILLISECONDS_BETWEEN_GMAPS_REQUESTS = 500;
-
     console.log("inside: executeFunctionArrayAsync");
     
     // this is not actually making a copy of the array, so it will mutate it ...
@@ -247,7 +237,7 @@ executeFunctionArrayAsynch(arr)
 	    executeFunctionArrayAsynch(closureArray);
 	}
     }, 
-				       MILLISECONDS_BETWEEN_GMAPS_REQUESTS);
+				       1000);
 
     console.log("at end of executeFunctionArrayAsynch()");
 
