@@ -483,90 +483,123 @@ promiseDirectionsStrategy()
 }
 
 function
+makeDirectionsRequest(start, end, waypts)
+{
+    var request = {
+        origin: start,
+        destination: end,
+        waypoints: waypts,
+        optimizeWaypoints: false,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+    directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+
+	    if (false) dumpDirectionsResponse(response);
+
+	    // XXX PRH, this is not quite correct, the function
+	    // draws only one segment
+
+	    if (true) drawDirectionsPolyline(0, waypts.length + 1, response);
+
+	    if (false) directionsDisplay.setDirections(response);
+
+	    var route = response.routes[0];
+
+	    var totalMins = 0;
+	    // For each route, display summary information.
+
+	    for (var i = 0; i < route.legs.length; i++) {
+		var routeSegment = i + 1;
+
+		appendToSummaryPanel('<b>Route Segment: ' + routeSegment + '</b><br>');
+		appendToSummaryPanel(route.legs[i].start_address + ' to ');
+		appendToSummaryPanel(route.legs[i].end_address + '<br>');
+		appendToSummaryPanel(route.legs[i].distance.text + '<br>');
+		appendToSummaryPanel(route.legs[i].duration.text + '<br>');
+		totalMins += route.legs[i].duration.value;
+	    }
+
+	    appendToSummaryPanel('Total minutes = ' + totalMins / 60 + '<br>');
+
+	} else {            
+	    appendToSummaryPanel('... directions failed! ....');
+	}
+    });
+}
+
+function
 batchDirectionsStrategy()
 {
     this.execute = 
 	function(my_lines) 
     {
-	var max_gmaps_waypoints = 9;
+	var max_gmaps_waypoints = 8;
 
 	logConsoleEvent("use batchDirectionsStrategy");
 
 	var n = my_lines.length;
 
-	var start = my_lines[0];
-	var end = my_lines[n-1];
+	// break the list into chunks so that we can run the
+	// directions service on a list that does not go beyond the
+	// usage limit in terms of number of points, after we do that,
+	// then we can throttle those requests
 
-	var last_address_index = min(max_gmaps_waypoints, n - 1);
+	// we need to break the requests into chunks
+	// each chunk will have:
+	// 1) start
+	// 2) waypts
+	// 3) end
 
-	var waypts = [];
+	// XXX this loop is hard to visualize, I think that I need a picture ..
 
-	for (var i = 0, len = my_lines.length; i< len; i++) {
-	    logConsoleEvent(my_lines[i]);
+	// this is the gap
+	var y = max_gmaps_waypoints + 1;
 
-	    if (i > 0 && i < max_gmaps_waypoints) {
-		waypts.push({location:my_lines[i], stopover:true});
+	var quotient = Math.floor(n / y);
+
+	logConsoleEvent("quotient = " + quotient);
+	
+	var remainder = n % y;
+
+	logConsoleEvent("remainder = " + remainder);
+
+	var lim;
+
+	if (remainder == 0) {
+	    lim = quotient;
+	} else {
+	    lim = quotient + 1;
+	}
+
+	logConsoleEvent("lim = " + lim);
+	
+	var start_index;
+	var end_index;
+	
+	for (var x = 0; x < lim; x++) {
+	    start_index = x * y;
+
+	    if (x == (lim - 1)) {
+		end_index = n - 1;
+	    } else {
+		end_index = start_index + y;
+	    }
+
+	    var start = my_lines[start_index];	
+	    var end = my_lines[end_index];
+
+	    var waypts = [];
+	    
+
+	    for (var i = start_index + 1; i < end_index; i++) {
 		logConsoleEvent(my_lines[i]);
+		waypts.push({location:my_lines[i], stopover:true});
 	    }
-	}
 
-	// XXX the next step is to break the list into chunks so that
-	// we can run the directions service on a list that does not
-	// go beyond the usage limit in terms of number of points,
-	// after we do that, then we can throttle those requests
-
-	if (waypts.length > max_gmaps_waypoints) {
-	    clearSummaryPanel();
-	    appendToSummaryPanel('<b>too many addresses, max is 9!... ' + '</b><br>');
-	    appendToSummaryPanel(n);
-	    return;
-	}
-
-	var request = {
-            origin: start,
-            destination: end,
-            waypoints: waypts,
-            optimizeWaypoints: false,
-            travelMode: google.maps.DirectionsTravelMode.DRIVING
-	};
-
-	directionsService.route(request, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-
-		if (false) dumpDirectionsResponse(response);
-
-		// XXX PRH, this is not quite correct, the function
-		// draws only one segment
-
-		if (true) drawDirectionsPolyline(0, waypts.length, response);
-
-		if (false) directionsDisplay.setDirections(response);
-
-		var route = response.routes[0];
-		var summaryPanel = document.getElementById('directions_panel');
-		//	summaryPanel.innerHTML = '';
-
-		var totalMins = 0;
-		// For each route, display summary information.
-
-		for (var i = 0; i < route.legs.length; i++) {
-		    var routeSegment = i + 1;
-
-		    appendToSummaryPanel('<b>Route Segment: ' + routeSegment + '</b><br>');
-		    appendToSummaryPanel(route.legs[i].start_address + ' to ');
-		    appendToSummaryPanel(route.legs[i].end_address + '<br>');
-		    appendToSummaryPanel(route.legs[i].distance.text + '<br>');
-		    appendToSummaryPanel(route.legs[i].duration.text + '<br>');
-		    totalMins += route.legs[i].duration.value;
-		}
-
-		appendToSummaryPanel('Total minutes = ' + totalMins / 60 + '<br>');
-
-	    } else {            
-		appendToSummaryPanel('... directions failed! ....');
-	    }
-	}
-			       );
+	    makeDirectionsRequest(start, end, waypts);
+	}   
     }
 }
 
@@ -576,7 +609,6 @@ directDirectionsStrategy()
     this.execute = 
 	function(my_lines) 
     {
-	
 	var n = my_lines.length;
 
 	logConsoleEvent("useDirectApproach");
