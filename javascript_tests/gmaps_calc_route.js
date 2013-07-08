@@ -417,11 +417,12 @@ newCalcRoutePromise(i, totalLength, startLocation, endLocation)
         travelMode: google.maps.DirectionsTravelMode.DRIVING
     };
 
-    // XXX This is tricky, combining deferred's and timeouts
-    // The purpose of this is to throttle, but it probably won't if everything goes in parallel
-    // but I guess that promises prevent that? Will I get a rush all at once if the timers
-    // all expire at the same time? I will also be breaking the directions into segments
-    // in order to call the api less times
+    // XXX This is tricky, combining deferred's and timeouts The
+    // purpose of this is to throttle, but it probably won't if
+    // everything goes in parallel but I guess that promises prevent
+    // that? Will I get a rush all at once if the timers all expire at
+    // the same time? I will also be breaking the directions into
+    // segments in order to call the api less times
     
     setTimeout(function() {
 
@@ -461,10 +462,6 @@ promiseDirectionsStrategy()
 	logConsoleEvent("usePromiseApproach");
 
 	var n = my_lines.length;
-	var start = my_lines[0];
-	var end = my_lines[n-1];
-
-	var totalLength = my_lines.length;
 
 	var pre_promise = null;
 	var next_promise = null;
@@ -473,11 +470,11 @@ promiseDirectionsStrategy()
 	    if (pre_promise) {
 		// XXX PRH, this is were I'm worried about using promises incorrectly
 		next_promise = pre_promise.then(function() {
-		    newCalcRoutePromise(i, totalLength, my_lines[i], my_lines[i+1]);
+		    newCalcRoutePromise(i, n, my_lines[i], my_lines[i+1]);
 		});
             } else
 	    {
-		next_promise = newCalcRoutePromise(i, totalLength, my_lines[i], my_lines[i+1]);
+		next_promise = newCalcRoutePromise(i, n, my_lines[i], my_lines[i+1]);
 	    }
 	    
 	    pre_promise = next_promise;
@@ -496,10 +493,9 @@ batchDirectionsStrategy()
 	logConsoleEvent("use batchDirectionsStrategy");
 
 	var n = my_lines.length;
+
 	var start = my_lines[0];
 	var end = my_lines[n-1];
-
-	var totalLength = my_lines.length;
 
 	var last_address_index = min(max_gmaps_waypoints, n - 1);
 
@@ -522,7 +518,7 @@ batchDirectionsStrategy()
 	if (waypts.length > max_gmaps_waypoints) {
 	    clearSummaryPanel();
 	    appendToSummaryPanel('<b>too many addresses, max is 9!... ' + '</b><br>');
-	    appendToSummaryPanel(my_lines.length);
+	    appendToSummaryPanel(n);
 	    return;
 	}
 
@@ -582,10 +578,6 @@ directDirectionsStrategy()
     {
 	
 	var n = my_lines.length;
-	var start = my_lines[0];
-	var end = my_lines[n-1];
-
-	var totalLength = my_lines.length;
 
 	logConsoleEvent("useDirectApproach");
 	
@@ -606,10 +598,6 @@ throttledDirectionsStrategy()
     {
 	
 	var n = my_lines.length;
-	var start = my_lines[0];
-	var end = my_lines[n-1];
-
-	var totalLength = my_lines.length;
 
 	console.log("usingThrottledApproach");
 
@@ -625,8 +613,8 @@ throttledDirectionsStrategy()
 	    };
 	}
 
-	for (var i = 0; i < (totalLength - 1); i++) {
-	    var theFunc = createClosure(i, totalLength, my_lines[i], my_lines[i+1]);
+	for (var i = 0; i < (n - 1); i++) {
+	    var theFunc = createClosure(i, n, my_lines[i], my_lines[i+1]);
 	    theFuncArray.push(theFunc);
 	}
 	
@@ -639,20 +627,16 @@ throttledDirectionsStrategy()
 function
 removeNewlines(str)
 {
-    var old_mylines = str;
     var my_lines = [];
 
-    // XXX I think that this is a risk, I do not think that an "for in" loop is correct
-    // use an array or a jquery iterator
-    for (var i in old_mylines) {
-	var the_line = old_mylines[i];
-	logConsoleEvent("*");
-	logConsoleEvent(the_line)
-	if (old_mylines[i].length > 0) {
-	    my_lines.push(old_mylines[i]);
+    // YYY (area for improvement) perhaps a map function could be used
+
+    $.each(str, function(index, value) {
+	if (value.length > 0) {
+	    my_lines.push(value);
 	}
-    }
-    
+	});
+
     return my_lines;
 }
 
