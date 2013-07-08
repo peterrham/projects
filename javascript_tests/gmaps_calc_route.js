@@ -20,7 +20,7 @@ cleanUpPolylineArray()
     for (i = 0, len = gPolylineArray.length; i < len; i++) {
         polyline = gPolylineArray[i];
 	polyline.setMap(null);
-        }
+    }
 
     gPolylineArray = new Array();
 }
@@ -432,10 +432,9 @@ newCalcRoutePromise(i, totalLength, startLocation, endLocation)
 		drawDirectionsPolyline(i, totalLength, response);
 		logConsoleEvent("after calling Polyline()");
 	    } else {
+		clearSummaryPanel();
+		appendToSummaryPanel('<br>' + status);
 
-		var summaryPanel = document.getElementById('directions_panel');
-		summaryPanel.innerHTML += ("\n" + status);
-		// + status;
 		logConsoleEvent("status == *ERROR*");
 		logConsoleEvent("status == " + status.toString());
 	    }
@@ -521,8 +520,9 @@ batchDirectionsStrategy()
 	// after we do that, then we can throttle those requests
 
 	if (waypts.length > max_gmaps_waypoints) {
-	    summaryPanel.innerHTML = '<b>too many addresses, max is 9!... ' + '</b><br>';
-	    summaryPanel.innerHTML += my_lines.length;
+	    clearSummaryPanel();
+	    appendToSummaryPanel('<b>too many addresses, max is 9!... ' + '</b><br>');
+	    appendToSummaryPanel(my_lines.length);
 	    return;
 	}
 
@@ -548,7 +548,7 @@ batchDirectionsStrategy()
 
 		var route = response.routes[0];
 		var summaryPanel = document.getElementById('directions_panel');
-		summaryPanel.innerHTML = '';
+		//	summaryPanel.innerHTML = '';
 
 		var totalMins = 0;
 		// For each route, display summary information.
@@ -556,24 +556,22 @@ batchDirectionsStrategy()
 		for (var i = 0; i < route.legs.length; i++) {
 		    var routeSegment = i + 1;
 
-		    summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-		    summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		    summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		    summaryPanel.innerHTML += route.legs[i].distance.text + '<br>';
-		    summaryPanel.innerHTML += route.legs[i].duration.text + '<br>';
+		    appendToSummaryPanel('<b>Route Segment: ' + routeSegment + '</b><br>');
+		    appendToSummaryPanel(route.legs[i].start_address + ' to ');
+		    appendToSummaryPanel(route.legs[i].end_address + '<br>');
+		    appendToSummaryPanel(route.legs[i].distance.text + '<br>');
+		    appendToSummaryPanel(route.legs[i].duration.text + '<br>');
 		    totalMins += route.legs[i].duration.value;
 		}
 
-		summaryPanel.innerHTML += 'Total minutes = ' + totalMins / 60 + '<br>';
+		appendToSummaryPanel('Total minutes = ' + totalMins / 60 + '<br>');
 
 	    } else {            
-
-		var summaryPanel = document.getElementById('directions_panel');
-		summaryPanel.innerHTML = '... directions failed! ....';
+		appendToSummaryPanel('... directions failed! ....');
 	    }
 	}
 			       );
-}
+    }
 }
 
 function
@@ -637,6 +635,7 @@ throttledDirectionsStrategy()
 }
 
 // strip out the empty lines
+
 function
 removeNewlines(str)
 {
@@ -657,22 +656,31 @@ removeNewlines(str)
     return my_lines;
 }
 
-
 // main function for this page
+
+function
+clearSummaryPanel()
+{
+    var summaryPanel = document.getElementById('directions_panel');
+    summaryPanel.innerHTML = '';
+}
+
+function
+appendToSummaryPanel(str)
+{
+    var summaryPanel = document.getElementById('directions_panel');
+    summaryPanel.innerHTML += str;
+}
 
 function 
 calcRoute() 
 {
     cleanUpPolylineArray();
 
-    var WAYPOINTS_DIRECTIONS_METHOD = 'WAYPOINTS_DIRECTIONS_METHOD';
+    clearSummaryPanel();
 
-    // XXX needs to be some class instead of an if statement
-    var directionsMethod = WAYPOINTS_DIRECTIONS_METHOD;
-
-    var summaryPanel = document.getElementById('directions_panel');
-
-    summaryPanel.innerHTML = '... trying to calculate ...' + currentTimeAsString();
+    appendToSummaryPanel('... trying to calculate ...' + currentTimeAsString());
+    appendToSummaryPanel('<br>');
 
     var lines = document.listOfLocations.inputList.value;
 
@@ -692,11 +700,8 @@ calcRoute()
 	alert('Need at least two addresses!');
 	return;
     }
-    
-    var start = my_lines[0];
-    var end = my_lines[n-1];
 
-    var totalLength = my_lines.length;
+    // experiment with various strategies
 
     var directionsStrategy = new throttledDirectionsStrategy();
     
@@ -707,6 +712,5 @@ calcRoute()
     directionsStrategy = new batchDirectionsStrategy();
 
     directionsStrategy.execute(my_lines);
-    
 }
 
