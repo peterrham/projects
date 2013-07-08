@@ -1,4 +1,30 @@
 
+// XXX use a global variable to contain the polylines, delete it each try
+// migrate to some application global object or something later
+// let's see how this works
+
+// XXX extending this to include markers which have the same setMap()
+// method which is using a type of duck typing, since the prototypes
+// of neither of these "classes" share that method, apparently.
+// I still need to learn about javascript prototypes/classes
+
+var gPolylineArray = new Array();
+
+function
+cleanUpPolylineArray()
+{
+    var polyline; 
+
+    // XXX should there be variable declarations for i and len?
+
+    for (i = 0, len = gPolylineArray.length; i < len; i++) {
+        polyline = gPolylineArray[i];
+	polyline.setMap(null);
+        }
+
+    gPolylineArray = new Array();
+}
+
 // gmaps overlay stuff
 
 // Define the overlay, derived from google.maps.OverlayView
@@ -131,9 +157,17 @@ function geocodePromise(address){
 
             });
 
+	    // XXX need to change the name and use of global variable
+	    gPolylineArray.push(marker);
+
 	    var label = new Label({
 		map: map
             });
+
+	    // XXX PRH, should name this to another array and store better in an 
+	    // "application object" rather than a global variable
+
+	    gPolylineArray.push(label);
             label.set('zIndex', 1234);
             label.bindTo('position', marker, 'position');
 	    label.set('text', "Home");
@@ -160,6 +194,7 @@ function codeAddress() {
 		map: map,
 		position: results[0].geometry.location
             });
+	    gPolylineArray.push(marker);
 	} else {
             alert("Geocode was not successful for the following reason: " + status);
 	}
@@ -320,6 +355,8 @@ drawDirectionsPolyline(i, n, result)
 
     polyline.setMap(map);
 
+    gPolylineArray.push(polyline);
+
     // assumes only one leg
     var leg = result.routes[0].legs[0];
 
@@ -328,10 +365,14 @@ drawDirectionsPolyline(i, n, result)
 	position: leg.start_location
     });
 
+    gPolylineArray.push(marker);
+
     var label = new Label({
 	map: map
     });
     
+    gPolylineArray.push(label);
+
     label.bindTo('position', marker, 'position');
     label.set('text', (i+1).toString());
 
@@ -404,164 +445,104 @@ newCalcRoutePromise(i, totalLength, startLocation, endLocation)
     return dfd.promise();
 }
 
+// XXX this promise based strategy does not quite work, it only draws
+// the first segment which could mean that the promise part does not
+// work!
 
-// main function for this page
-
-function 
-calcRoute() 
+function
+promiseDirectionsStrategy()
 {
-    var summaryPanel = document.getElementById('directions_panel');
-
-    summaryPanel.innerHTML = '... trying to calculate ...' + currentTimeAsString();
-
-    var waypts = [];
-
-    var lines = document.listOfLocations.inputList.value;
-
-    //      alert(lines);
-
-    my_lines = lines.split(/\n/); 
-
-    // strip out the empty lines
-
-    var old_mylines = my_lines;
-    my_lines = [];
-
-    for (var i in old_mylines) {
-	var the_line = old_mylines[i];
-	logConsoleEvent("*");
-	logConsoleEvent(the_line)
-	if (old_mylines[i].length > 0) {
-	    my_lines.push(old_mylines[i]);
-	}
+    this.execute = 
+	function(my_lines) 
+    {
 	
-    }
+	// XXX lot's of redundancy between the loops in the 3
+	// strategies we can factor this out
 
-    var max_gmaps_waypoints = 9;
+	logConsoleEvent("usePromiseApproach");
 
-    var n = my_lines.length;
-
-    // alert(n);
-
-    //      alert(my_lines);
-    if (n < 2) {
-	alert('Need at least two addresses!');
-    } else {
-
-
-        var start = my_lines[0];
-        var end = my_lines[n-1];
+	var n = my_lines.length;
+	var start = my_lines[0];
+	var end = my_lines[n-1];
 
 	var totalLength = my_lines.length;
-	// XXX refactoring this function
 
-	var useThrottledApproach = true;
+	var pre_promise = null;
+	var next_promise = null;
 
-	if (useThrottledApproach) {
-	    console.log("usingThrottledApproach");
-
-	    // create an array of functions to call asynch
-
-	    var theFuncArray = new Array();
-
-	    function
-	    createClosure(i, totalLength, src, dst)
+	for (var i = 0; i < (n - 1); i++) {
+	    if (pre_promise) {
+		// XXX PRH, this is were I'm worried about using promises incorrectly
+		next_promise = pre_promise.then(function() {
+		    newCalcRoutePromise(i, totalLength, my_lines[i], my_lines[i+1]);
+		});
+            } else
 	    {
-		return function() {
-		    fireOffDirectionsRequest(i, totalLength, src, dst);
-		};
-	    }
-
-
-	    for (var i = 0; i < (totalLength - 1); i++) {
-		// I hope that we are capturing this close effectively, still worried about side-effects
-		// does not look like much of a risk of side effects here
-		// will i change for the function?
-		var theFunc = createClosure(i, totalLength, my_lines[i], my_lines[i+1]);
-		
-		theFuncArray.push(theFunc);
+		next_promise = newCalcRoutePromise(i, totalLength, my_lines[i], my_lines[i+1]);
 	    }
 	    
-	    // This is the big function call ....
-
-	    executeFunctionArrayAsynch(theFuncArray);
-
-	    return;
+	    pre_promise = next_promise;
 	}
+    }
+}
 
-	var useDirectApproach = true;
+function
+batchDirectionsStrategy()
+{
+    this.execute = 
+	function(my_lines) 
+    {
+	var max_gmaps_waypoints = 9;
 
+	logConsoleEvent("use batchDirectionsStrategy");
 
-	if (useDirectApproach){
-	    logConsoleEvent("useDirectApproach");
-	    for (var i = 0; i < (totalLength - 1); i++) {
-		logConsoleEvent("directApproach(): i == " + i.toString());
+	var n = my_lines.length;
+	var start = my_lines[0];
+	var end = my_lines[n-1];
 
-                fireOffDirectionsRequest(i, totalLength, my_lines[i], my_lines[i+1]);
+	var totalLength = my_lines.length;
 
-	    }
-	    return;
-	    
-	}
-
-	var usePromiseApproach = false;
-
-	if (usePromiseApproach) {
-
-
-	    
-	    var pre_promise = null;
-	    var next_promise = null;
-
-	    for (var i = 0; i < (totalLength - 1); i++) {
-		logConsoleEvent("calcRoute(): i == " + i.toString());
-
-		if (pre_promise) {
-		    // XXX PRH, this is were I'm worried about using promises incorrectly
-	            next_promise = pre_promise.then(function() {
-			newCalcRoutePromise(i, totalLength, my_lines[i], my_lines[i+1]);
-		    });
-                } else
-		{
-		    next_promise = newCalcRoutePromise(i, totalLength, my_lines[i], my_lines[i+1]);
-	        }
-		
-		pre_promise = next_promise;
-	    }
-	    return;
-	}
-
-	
 	var last_address_index = min(max_gmaps_waypoints, n - 1);
 
-	for (var i in my_lines) {
-	    //      alert(my_lines[i]);
+	var waypts = [];
+
+	for (var i = 0, len = my_lines.length; i< len; i++) {
+	    logConsoleEvent(my_lines[i]);
+
 	    if (i > 0 && i < max_gmaps_waypoints) {
 		waypts.push({location:my_lines[i], stopover:true});
 		logConsoleEvent(my_lines[i]);
-
 	    }
 	}
+
+	// XXX the next step is to break the list into chunks so that
+	// we can run the directions service on a list that does not
+	// go beyond the usage limit in terms of number of points,
+	// after we do that, then we can throttle those requests
 
 	if (waypts.length > max_gmaps_waypoints) {
 	    summaryPanel.innerHTML = '<b>too many addresses, max is 9!... ' + '</b><br>';
 	    summaryPanel.innerHTML += my_lines.length;
 	    return;
 	}
-        var request = {
+
+	var request = {
             origin: start,
             destination: end,
             waypoints: waypts,
             optimizeWaypoints: false,
             travelMode: google.maps.DirectionsTravelMode.DRIVING
-        };
+	};
 
-        directionsService.route(request, function(response, status) {
+	directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
 
 		if (false) dumpDirectionsResponse(response);
 
-		if (true) drawDirectionsPolyline(response);
+		// XXX PRH, this is not quite correct, the function
+		// draws only one segment
+
+		if (true) drawDirectionsPolyline(0, waypts.length, response);
 
 		if (false) directionsDisplay.setDirections(response);
 
@@ -571,6 +552,7 @@ calcRoute()
 
 		var totalMins = 0;
 		// For each route, display summary information.
+
 		for (var i = 0; i < route.legs.length; i++) {
 		    var routeSegment = i + 1;
 
@@ -591,6 +573,140 @@ calcRoute()
 	    }
 	}
 			       );
+}
+}
 
+function
+directDirectionsStrategy()
+{
+    this.execute = 
+	function(my_lines) 
+    {
+	
+	var n = my_lines.length;
+	var start = my_lines[0];
+	var end = my_lines[n-1];
+
+	var totalLength = my_lines.length;
+
+	logConsoleEvent("useDirectApproach");
+	
+	for (var i = 0; i < (n - 1); i++) {
+	    logConsoleEvent("directApproach(): i == " + i.toString());
+
+            fireOffDirectionsRequest(i, n, my_lines[i], my_lines[i+1]);
+
+	}
     }
 }
+
+function
+throttledDirectionsStrategy()
+{
+    this.execute = 
+	function(my_lines) 
+    {
+	
+	var n = my_lines.length;
+	var start = my_lines[0];
+	var end = my_lines[n-1];
+
+	var totalLength = my_lines.length;
+
+	console.log("usingThrottledApproach");
+
+	// create an array of functions to call asynch
+
+	var theFuncArray = new Array();
+
+	function
+	createClosure(i, totalLength, src, dst)
+	{
+	    return function() {
+		fireOffDirectionsRequest(i, totalLength, src, dst);
+	    };
+	}
+
+	for (var i = 0; i < (totalLength - 1); i++) {
+	    var theFunc = createClosure(i, totalLength, my_lines[i], my_lines[i+1]);
+	    theFuncArray.push(theFunc);
+	}
+	
+	executeFunctionArrayAsynch(theFuncArray);
+    };
+}
+
+// strip out the empty lines
+function
+removeNewlines(str)
+{
+    var old_mylines = str;
+    var my_lines = [];
+
+    // XXX I think that this is a risk, I do not think that an "for in" loop is correct
+    // use an array or a jquery iterator
+    for (var i in old_mylines) {
+	var the_line = old_mylines[i];
+	logConsoleEvent("*");
+	logConsoleEvent(the_line)
+	if (old_mylines[i].length > 0) {
+	    my_lines.push(old_mylines[i]);
+	}
+    }
+    
+    return my_lines;
+}
+
+
+// main function for this page
+
+function 
+calcRoute() 
+{
+    cleanUpPolylineArray();
+
+    var WAYPOINTS_DIRECTIONS_METHOD = 'WAYPOINTS_DIRECTIONS_METHOD';
+
+    // XXX needs to be some class instead of an if statement
+    var directionsMethod = WAYPOINTS_DIRECTIONS_METHOD;
+
+    var summaryPanel = document.getElementById('directions_panel');
+
+    summaryPanel.innerHTML = '... trying to calculate ...' + currentTimeAsString();
+
+    var lines = document.listOfLocations.inputList.value;
+
+    logConsoleEvent(lines);
+
+    my_lines = lines.split(/\n/); 
+
+    my_lines = removeNewlines(my_lines);
+
+    var n = my_lines.length;
+
+    logConsoleEvent(n);
+
+    logConsoleEvent(my_lines);
+
+    if (n < 2) {
+	alert('Need at least two addresses!');
+	return;
+    }
+    
+    var start = my_lines[0];
+    var end = my_lines[n-1];
+
+    var totalLength = my_lines.length;
+
+    var directionsStrategy = new throttledDirectionsStrategy();
+    
+    directionsStrategy = new directDirectionsStrategy();
+
+    directionsStrategy = new promiseDirectionsStrategy();
+
+    directionsStrategy = new batchDirectionsStrategy();
+
+    directionsStrategy.execute(my_lines);
+    
+}
+
