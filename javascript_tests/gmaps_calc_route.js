@@ -483,7 +483,31 @@ promiseDirectionsStrategy()
 }
 
 function
-makeDirectionsRequest(start, end, waypts)
+displayDirectionsResult(response)
+{	    
+    var route = response.routes[0];
+
+    var totalMins = 0;
+
+    // For each route, display summary information.
+
+    for (var i = 0; i < route.legs.length; i++) {
+	var routeSegment = i + 1;
+
+	appendToSummaryPanel('<b>Route Segment: ' + routeSegment + '</b><br>');
+	appendToSummaryPanel(route.legs[i].start_address + ' to ');
+	appendToSummaryPanel(route.legs[i].end_address + '<br>');
+	appendToSummaryPanel(route.legs[i].distance.text + '<br>');
+	appendToSummaryPanel(route.legs[i].duration.text + '<br>');
+	totalMins += route.legs[i].duration.value;
+    }
+
+    appendToSummaryPanel('Total minutes = ' + totalMins / 60 + '<br>');
+}
+
+
+function
+makeDirectionsRequest(batchElement, start, end, waypts)
 {
     var request = {
         origin: start,
@@ -493,8 +517,23 @@ makeDirectionsRequest(start, end, waypts)
         travelMode: google.maps.DirectionsTravelMode.DRIVING
     };
 
-    directionsService.route(request, function(response, status) {
+    // let's add promises to this in order to synchronize the gmaps
+    // requests which can come back out of order ....
+
+    var dfd = $.Deferred();
+
+    var result = directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
+
+	    logConsoleEvent("got directionsResponse");
+
+	    logConsoleEvent("batchElement = " + batchElement);
+	    logConsoleEvent(batchElement);
+	    logConsoleEvent(batchElement.batch);
+	    logConsoleEvent(batchElement.start);
+	    logConsoleEvent(batchElement.end);
+	    
+	    batchElement.response = response;
 
 	    if (false) dumpDirectionsResponse(response);
 
@@ -505,28 +544,16 @@ makeDirectionsRequest(start, end, waypts)
 
 	    if (false) directionsDisplay.setDirections(response);
 
-	    var route = response.routes[0];
-
-	    var totalMins = 0;
-	    // For each route, display summary information.
-
-	    for (var i = 0; i < route.legs.length; i++) {
-		var routeSegment = i + 1;
-
-		appendToSummaryPanel('<b>Route Segment: ' + routeSegment + '</b><br>');
-		appendToSummaryPanel(route.legs[i].start_address + ' to ');
-		appendToSummaryPanel(route.legs[i].end_address + '<br>');
-		appendToSummaryPanel(route.legs[i].distance.text + '<br>');
-		appendToSummaryPanel(route.legs[i].duration.text + '<br>');
-		totalMins += route.legs[i].duration.value;
-	    }
-
-	    appendToSummaryPanel('Total minutes = ' + totalMins / 60 + '<br>');
+	    dfd.resolve();
 
 	} else {            
 	    appendToSummaryPanel('... directions failed! ....');
 	}
     });
+
+    logConsoleEvent("result == " + result);
+
+    return dfd.promise();
 }
 
 function
@@ -578,6 +605,13 @@ batchDirectionsStrategy()
 	var start_index;
 	var end_index;
 	
+	var deferredArray = [];
+
+	// this is the start of an object that represents the batch 
+	// in order to post-process the batch
+
+	var batch = [];
+
 	for (var x = 0; x < lim; x++) {
 	    start_index = x * y;
 
@@ -598,8 +632,45 @@ batchDirectionsStrategy()
 		waypts.push({location:my_lines[i], stopover:true});
 	    }
 
-	    makeDirectionsRequest(start, end, waypts);
-	}   
+	    var promise = null;
+	    
+	    (function () {
+		var batchElement = {};
+		batchElement.batch = batch;
+		batchElement.start = start;
+		batchElement.end = end;
+
+		batch.push(batchElement);
+
+		promise = makeDirectionsRequest(batchElement, start, end, waypts);
+	    }());
+
+ 
+	    deferredArray.push(promise);
+
+	    promise.then(function() {
+		logConsoleEvent("one request finished");
+	    });
+	}
+	
+	$.when.apply($, deferredArray).then(function() {
+	    logConsoleEvent("all the deferreds have completed");
+	    logConsoleEvent("batch.length == " + batch.length);
+
+	    // iterate over the batch
+
+	    $.each(batch, function(index, batchElement) {
+		logConsoleEvent("index == " + index);
+		logConsoleEvent("batchElement.response.routes.length == " + 
+				batchElement.response.routes.length);
+
+		logConsoleEvent("batchElement.response.routes[0].legs.length == " + 
+				batchElement.response.routes[0].legs.length);
+		
+		displayDirectionsResult(batchElement.response);
+		});
+	});
+
     }
 }
 
