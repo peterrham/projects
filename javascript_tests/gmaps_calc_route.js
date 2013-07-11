@@ -483,6 +483,44 @@ promiseDirectionsStrategy()
 }
 
 function
+sumDirectionsDuration(response)
+{
+    var totalSeconds = 0;
+
+    logConsoleEvent("sumDirectionsDuration");
+
+    $.each(response.routes, function(index, value) {
+	logConsoleEvent("route = " + index);
+
+	$.each(value.legs, function(index, value) {
+	    logConsoleEvent("leg = " + index);
+	    
+	    totalSeconds += value.duration.value;
+	});
+    });
+
+    logConsoleEvent("totalSeconds == " + totalSeconds);
+
+    return totalSeconds;
+}
+
+function
+sumDirectionsDistance(response)
+{
+    var totalDistance = 0;
+
+    $.each(response.routes, function(index, value) {
+	$.each(value.legs, function(index, value) {
+	    totalDistance += value.distance.value;
+	});
+    });
+
+    logConsoleEvent("totalDistance == " + totalDistance);
+
+    return totalDistance;
+}
+	
+function
 displayDirectionsResult(response)
 {	    
     var route = response.routes[0];
@@ -502,7 +540,7 @@ displayDirectionsResult(response)
 	totalMins += route.legs[i].duration.value;
     }
 
-    appendToSummaryPanel('Total minutes = ' + totalMins / 60 + '<br>');
+    appendToSummaryPanel('Total minutes = ' + (totalMins / 60).toFixed(1) + '<br>');
 }
 
 
@@ -657,6 +695,26 @@ batchDirectionsStrategy()
 	    logConsoleEvent("all the deferreds have completed");
 	    logConsoleEvent("batch.length == " + batch.length);
 
+	    // iterate over the batch and sum the total time first
+	    var totalSeconds = 0;
+	    var totalDistance = 0; // in meters
+
+	    $.each(batch, function(index, batchElement) {
+		totalSeconds += sumDirectionsDuration(batchElement.response);
+		totalDistance += sumDirectionsDistance(batchElement.response);
+	    });
+
+	    logConsoleEvent("totalSeconds (total) = " + totalSeconds);
+	    logConsoleEvent("totalDistance (total) = " + totalDistance);
+
+	    var totalMinutes = totalSeconds / 60;
+
+	    var totalMiles = totalDistance * 0.000621371192;
+
+	    appendToSummaryPanel("Minutes (total): " + totalMinutes.toFixed(1) + '<br>');
+	    appendToSummaryPanel("Distance (miles) (total): " + totalMiles.toFixed(1) + '<br>');
+	    appendToSummaryPanel('<br>');
+
 	    // iterate over the batch
 
 	    $.each(batch, function(index, batchElement) {
@@ -669,6 +727,7 @@ batchDirectionsStrategy()
 		
 		displayDirectionsResult(batchElement.response);
 		});
+
 	});
 
     }
@@ -766,7 +825,8 @@ calcRoute()
 
     clearSummaryPanel();
 
-    appendToSummaryPanel('... trying to calculate ...' + currentTimeAsString());
+    appendToSummaryPanel('Calculating ' + currentTimeAsString() + " ...");
+    appendToSummaryPanel('<br>');
     appendToSummaryPanel('<br>');
 
     var lines = document.listOfLocations.inputList.value;
