@@ -1,4 +1,3 @@
-
 // XXX use a global variable to contain the polylines, delete it each try
 // migrate to some application global object or something later
 // let's see how this works
@@ -521,7 +520,7 @@ sumDirectionsDistance(response)
 }
 	
 function
-displayDirectionsResult(response)
+displayDirectionsResult(j, response)
 {	    
     var route = response.routes[0];
 
@@ -532,15 +531,11 @@ displayDirectionsResult(response)
     for (var i = 0; i < route.legs.length; i++) {
 	var routeSegment = i + 1;
 
-	appendToSummaryPanel('<b>Route Segment: ' + routeSegment + '</b><br>');
-	appendToSummaryPanel(route.legs[i].start_address + ' to ');
-	appendToSummaryPanel(route.legs[i].end_address + '<br>');
-	appendToSummaryPanel(route.legs[i].distance.text + '<br>');
-	appendToSummaryPanel(route.legs[i].duration.text + '<br>');
-	totalMins += route.legs[i].duration.value;
+	appendToSummaryPanel((routeSegment + j) + ': ');
+	appendToSummaryPanel(route.legs[i].start_address);
+	appendToSummaryPanel('<br>');
     }
-
-    appendToSummaryPanel('Total minutes = ' + (totalMins / 60).toFixed(1) + '<br>');
+    return route.legs.length;
 }
 
 
@@ -711,22 +706,26 @@ batchDirectionsStrategy()
 
 	    var totalMiles = totalDistance * 0.000621371192;
 
-	    appendToSummaryPanel("Minutes (total): " + totalMinutes.toFixed(1) + '<br>');
-	    appendToSummaryPanel("Distance (miles) (total): " + totalMiles.toFixed(1) + '<br>');
-	    appendToSummaryPanel('<br>');
+	    var textArea = document.getElementById('summary_metrics_text_area');
+	    textArea.innerHTML = "Minutes (total): " + totalMinutes.toFixed(1) + '<br>';
+	    textArea.innerHTML += "Distance (miles) (total): " + totalMiles.toFixed(1) + '<br>';
+	    textArea.innerHTML += '<br>';
 
 	    // iterate over the batch
 
-	    $.each(batch, function(index, batchElement) {
-		logConsoleEvent("index == " + index);
-		logConsoleEvent("batchElement.response.routes.length == " + 
-				batchElement.response.routes.length);
+	    (function() {
+		var i = 0;
+		$.each(batch, function(index, batchElement) {
+		    logConsoleEvent("index == " + index);
+		    logConsoleEvent("batchElement.response.routes.length == " + 
+				    batchElement.response.routes.length);
 
-		logConsoleEvent("batchElement.response.routes[0].legs.length == " + 
-				batchElement.response.routes[0].legs.length);
-		
-		displayDirectionsResult(batchElement.response);
+		    logConsoleEvent("batchElement.response.routes[0].legs.length == " + 
+				    batchElement.response.routes[0].legs.length);
+		    
+		    i += displayDirectionsResult(i, batchElement.response);
 		});
+	    })();
 
 	});
 
@@ -825,9 +824,8 @@ calcRoute()
 
     clearSummaryPanel();
 
-    appendToSummaryPanel('Calculating ' + currentTimeAsString() + " ...");
-    appendToSummaryPanel('<br>');
-    appendToSummaryPanel('<br>');
+    var textArea = document.getElementById('status_text_area');
+    textArea.innerHTML = 'Calculating: ' + currentTimeAsString() + " ...";
 
     var lines = document.listOfLocations.inputList.value;
 
