@@ -520,6 +520,18 @@ sumDirectionsDistance(response)
 }
 	
 function
+addAddressToPanel(i, address)
+{
+    var table=document.getElementById("results_table");
+    var row=table.insertRow(i);
+    var cell1=row.insertCell(0);
+
+    appendToSummaryPanel(i + ': ');
+    appendToSummaryPanel(address);
+    appendToSummaryPanel('<br>');
+}
+
+function
 displayDirectionsResult(j, response)
 {	    
     var route = response.routes[0];
@@ -530,11 +542,9 @@ displayDirectionsResult(j, response)
 
     for (var i = 0; i < route.legs.length; i++) {
 	var routeSegment = i + 1;
-
-	appendToSummaryPanel((routeSegment + j) + ': ');
-	appendToSummaryPanel(route.legs[i].start_address);
-	appendToSummaryPanel('<br>');
+	addAddressToPanel(routeSegment + j , route.legs[i].start_address);
     }
+
     return route.legs.length;
 }
 
@@ -714,16 +724,30 @@ batchDirectionsStrategy()
 	    // iterate over the batch
 
 	    (function() {
-		var i = 0;
-		$.each(batch, function(index, batchElement) {
-		    logConsoleEvent("index == " + index);
-		    logConsoleEvent("batchElement.response.routes.length == " + 
-				    batchElement.response.routes.length);
 
-		    logConsoleEvent("batchElement.response.routes[0].legs.length == " + 
-				    batchElement.response.routes[0].legs.length);
-		    
+		var i = 0;
+		var nElements = batch.length;
+		
+		logConsoleEvent("nElements == " + nElements);
+
+		$.each(batch, function(index, batchElement) {
+		    var response = batchElement.response;
+		    var numRoutes = response.routes.length;
+		    var numLegs = response.routes[0].legs.length;
+
+		    logConsoleEvent("index == " + index);
+		    logConsoleEvent("numRoutes == " + numRoutes);
+		    logConsoleEvent("numLegs == " + numLegs);
+
 		    i += displayDirectionsResult(i, batchElement.response);
+
+		    // this is the last element in the batch
+
+		    if (index == nElements - 1) {
+
+
+			addAddressToPanel(i + 1, response.routes[0].legs[numLegs - 1].end_address);
+		    }
 		});
 	    })();
 
