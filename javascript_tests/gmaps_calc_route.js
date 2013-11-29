@@ -7,7 +7,21 @@
 // of neither of these "classes" share that method, apparently.
 // I still need to learn about javascript prototypes/classes
 
+
+function
+secondsToMinutes(seconds)
+{
+    return seconds / 60;
+}
+
+function
+metersToMiles(meters)
+{
+    return meters * 0.000621371192;
+}
+
 var gPolylineArray = new Array();
+
 
 function
 cleanUpPolylineArray()
@@ -518,17 +532,76 @@ sumDirectionsDistance(response)
 
     return totalDistance;
 }
-	
+
+
+// perhaps this can be generated to adding an object to a table the
+// table object can have a list of row and column names
+
+var APP_GLOBAL_OBJ = {
+    resultsTable :  {
+	id : "results_table",
+	columnDefinitions : [
+	    "#",
+	    "travel distance",
+	    "travel time",
+	    "address",
+	    "street",
+	    "city",
+	    "state",
+	    "post code",
+	    "country",
+	]
+    }
+};
+
+
+
 function
 addAddressToPanel(i, address)
 {
-    var table=document.getElementById("results_table");
-    var row=table.insertRow(i);
-    var cell1=row.insertCell(0);
-
     appendToSummaryPanel(i + ': ');
     appendToSummaryPanel(address);
     appendToSummaryPanel('<br>');
+}
+
+function
+addRowToTable(rowNumber, tableDescriptor, rowHash)
+{
+    var table = document.getElementById(tableDescriptor.id);
+
+    var row = table.insertRow(rowNumber);
+    
+    var cell;
+
+    $(tableDescriptor.columnDefinitions).each(function(index, item) {
+	logConsoleEvent("index = " + index);
+	cell = row.insertCell(index);
+	cell.innerHTML = rowHash[item] || "";
+    });    
+}
+
+function
+addTableHeader(tableDescriptor)
+{
+    var table = document.getElementById(tableDescriptor.id);
+
+    var row = table.insertRow(0);
+
+    var cell;
+
+    $(tableDescriptor.columnDefinitions).each(function(index, item) {
+	logConsoleEvent("index = " + index);
+	cell = row.insertCell(index);
+	cell.innerHTML = tableDescriptor.columnDefinitions[index];
+    });    
+}
+
+function
+createResultsTable()
+{
+    $("#results_table").html("");
+
+    addTableHeader(APP_GLOBAL_OBJ.resultsTable);
 }
 
 function
@@ -700,6 +773,41 @@ batchDirectionsStrategy()
 	    logConsoleEvent("all the deferreds have completed");
 	    logConsoleEvent("batch.length == " + batch.length);
 
+	    // turn the batch into a leg array
+	    var legs = [];
+
+	    $.each(batch, function(index, batchElement) {
+
+		var response = batchElement.response;
+
+		$.each(response.routes[0].legs, function(index, element) {
+		    legs.push(element);
+
+		});
+
+	    });
+	    
+	    // iterate over the legs, there will be one more stop than leg
+	    $.each(legs, function(index, leg) {
+		var rowHash = {};
+		rowHash["#"] = index + 1;
+		rowHash["travel distance"] = metersToMiles(leg.distance.value).toFixed(1);
+		rowHash["travel time"] = secondsToMinutes(leg.duration.value).toFixed(1);
+		rowHash["address"] = leg.start_address;
+		addRowToTable(index + 1, APP_GLOBAL_OBJ.resultsTable, rowHash);
+
+		// add the last stop
+		if (index == (legs.length - 1)) {
+		    rowHash = {};
+		    rowHash["#"] = index + 2;
+		    rowHash["address"] = leg.end_address;
+		    addRowToTable(index + 2, APP_GLOBAL_OBJ.resultsTable, rowHash);		    
+		}
+	    });
+		
+	    logConsoleEvent("number of legs = " + legs.length);
+
+		   
 	    // iterate over the batch and sum the total time first
 	    var totalSeconds = 0;
 	    var totalDistance = 0; // in meters
@@ -712,13 +820,14 @@ batchDirectionsStrategy()
 	    logConsoleEvent("totalSeconds (total) = " + totalSeconds);
 	    logConsoleEvent("totalDistance (total) = " + totalDistance);
 
-	    var totalMinutes = totalSeconds / 60;
+	    var totalMinutes = secondsToMinutes(totalSeconds);
 
-	    var totalMiles = totalDistance * 0.000621371192;
+	    var totalMiles = metersToMiles(totalDistance);
 
 	    var textArea = document.getElementById('summary_metrics_text_area');
 	    textArea.innerHTML = "Minutes (total): " + totalMinutes.toFixed(1) + '<br>';
 	    textArea.innerHTML += "Distance (miles) (total): " + totalMiles.toFixed(1) + '<br>';
+	    textArea.innerHTML += "Speed (miles per hour): " + (totalMiles / (totalMinutes / 60)).toFixed(1) + '<br>';
 	    textArea.innerHTML += '<br>';
 
 	    // iterate over the batch
@@ -847,6 +956,8 @@ calcRoute()
     cleanUpPolylineArray();
 
     clearSummaryPanel();
+
+    createResultsTable();
 
     var textArea = document.getElementById('status_text_area');
     textArea.innerHTML = 'Calculating: ' + currentTimeAsString() + " ...";
