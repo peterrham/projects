@@ -125,3 +125,10 @@
 
 ; very important to solve hangs/delays on windows!
 (setq w32-get-true-file-attributes nil)
+(server-start)
+
+; (setq default-directory "c:\\workspace\\github\\projects\\javascript_tests\\")
+
+; (dired "c:/workspace/github/projects/javascript_tests/")
+
+

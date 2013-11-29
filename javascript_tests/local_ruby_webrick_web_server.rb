@@ -11,7 +11,7 @@ server = WEBrick::HTTPServer.new :Port => 8000, :DocumentRoot => root
 trap 'INT' do server.shutdown end
 
 server.mount_proc '/dyn/' do |req, res|
-   res.body = 'Hello, world!'
+   res.body = 'Hello, world 1,2,3!'
 end
 
 
