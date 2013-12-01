@@ -1,4 +1,7 @@
+define(function() {
 
+function test() {
+	logConsoleEvent("jquery_throttle_test_script");
     if (false) {
 
 	logConsoleEvent("throttle(): before");
@@ -288,5 +291,8 @@ if (true) {
 	executeFunctionArrayAsynch(functionArray);
     }
 }
-
-
+}
+ 
+    return {test: function() { test(); }};
+    
+}); // end of define module
