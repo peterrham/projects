@@ -42,13 +42,15 @@
     -->
 
   <head>
+
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Turn By Turn Directions</title>
+
     <link 
        href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" 
        rel="stylesheet">
-    
+
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
@@ -57,12 +59,25 @@
 	 I am progressively removing them using requireJS API and library
 	 -->
 
-
     <script type="text/javascript" src="jquery.js"></script>          
 
     <script type="text/javascript" src="moment.js"></script>          
 
+    <script>
+      console.log("before require.js");
+    </script>          
+
     <script data-main="main.js" src="require.js">
+
+    <!-- 
+	 this is weird, it depends upon this following script element
+
+      -->
+
+    <script>
+    </script>          
+
+
 
     <!-- 
 	 XXX, do styles always need to be in the <head>. Not for hmtl5, right?
