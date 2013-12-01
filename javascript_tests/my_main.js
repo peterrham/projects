@@ -3,7 +3,7 @@ console.log("foo bar main.js");
 console.log("inside #2 main.js");
 window.onload = function() {console.log("onload called");};
 
-require(["jquery", "gmaps_calc_route"], 
+require(["jquery-1.10.2", "gmaps_calc_route"], 
  	function(jquery, gmaps_calc_route)
 {
 

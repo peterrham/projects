@@ -1,0 +1,16 @@
+
+      #directions_panel {
+      margin:20px;background-color:Lavender;
+      }
+
+      #map-canvas {
+      float:left;width:70%;height:100%;
+      } 
+
+      #control_panel {
+      float:right;width:30%;text-align:left;padding-top:20px;
+      }
+      
+      #spacer {
+      margin:20px;border-width:2px;
+      }
