@@ -7,7 +7,7 @@
 // of neither of these "classes" share that method, apparently.
 // I still need to learn about javascript prototypes/classes
 
-define(["local_javascript_utilities", "google_maps"], 
+define(["local_javascript_utilities", "async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"], 
        function(local_javascript_utilities, google_maps) {
 
 function
