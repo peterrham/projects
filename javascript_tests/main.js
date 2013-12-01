@@ -27,7 +27,4 @@ require(["util", "module2", "gmaps_calc_route", "jquery_throttle_test_script"], 
 	    gmaps_calc_route.calcRoute();
 	});
     });
-
-    jquery_throttle_test_script.test();
-    
 });

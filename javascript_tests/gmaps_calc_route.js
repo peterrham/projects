@@ -215,6 +215,7 @@ function codeAddress() {
     });
 }
 
+
 // XXX Global variables?
 
 var momLocation;
@@ -222,7 +223,6 @@ var homeLocation;
 var directionsDisplay;
 
 function initialize() {
-    
     local_javascript_utilities.logConsoleEvent("initialize():");
 
     directionsDisplay = new google.maps.DirectionsRenderer();
