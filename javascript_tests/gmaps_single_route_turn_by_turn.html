@@ -39,10 +39,6 @@
        button are attached in the main javascript file loaded by
        requireJS.
 
-       TODO: 
-       - get rid of the direct inclusion of the google maps api global browser script
-       - ditto for jquery
-
     -->
 
   <head>
@@ -56,17 +52,6 @@
        href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" 
        rel="stylesheet">
 
-    <!-- 
-	 XXX, I wish I could manage these javascript files better so that they included each other ....
-	 I am progressively removing them using requireJS API and library
-
-	 -->
-
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-
-
-
-    <script type="text/javascript" src="jquery.js"></script>          
 
     <script data-main="my_main.js" src="require.js"></script>
 
