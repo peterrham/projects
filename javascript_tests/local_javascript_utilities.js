@@ -1,3 +1,13 @@
+define(function() {
+
+// this function is just for testing, it is not currently used
+
+function
+testFunction()
+{
+
+}
+
 function
 currentTimeAsString()
 {
@@ -149,3 +159,7 @@ fireOffDirectionsRequest(i, totalLength, startLocation, endLocation)
      }
     );
 }
+    return {currentTimeAsString: currentTimeAsString,
+	   logConsoleEvent: logConsoleEvent,
+	   fireOffDirectionsRequest: fireOffDirectionsRequest};
+});

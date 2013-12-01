@@ -35,6 +35,10 @@
        XXX This code now uses a throttling mechanism to now overload
        google maps usage limits.
 
+       Note: the document ready handler and later the submit form
+       button are attached in the main javascript file loaded by
+       requireJS.
+
     -->
 
   <head>
@@ -45,11 +49,14 @@
        href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" 
        rel="stylesheet">
     
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
     <!-- 
 	 XXX, I wish I could manage these javascript files better so that they included each other ....
-      -->
+	 I am progressively removing them using requireJS API and library
+	 -->
+
 
     <script type="text/javascript" src="jquery.js"></script>          
 
@@ -57,9 +64,17 @@
 
     <script type="text/javascript" src="javascript_utilities.js"></script>          
     
-    <script type="text/javascript" src="jquery_throttle_test_script.js"></script>          
+    <script>
+      console.log("before require.js");
+    </script>
 
-    <script type="text/javascript" src="gmaps_calc_route.js"></script>          
+    <script data-main="main.js" src="require.js">
+
+    </script>
+
+    <script>
+      console.log("after require.js");
+    </script>
 
 
     <!-- 
@@ -88,7 +103,7 @@
 
   </head>
 
-  <body onload="initialize()">
+  <body>
 
     <div id="map-canvas"></div>
 
@@ -97,11 +112,7 @@
       <div id="spacer">
 	<br>
 
-	<!-- 
-	     XXX, is it better style to add the click handler using the onload event?
-	  -->
-
-	<input type="submit" onclick="calcRoute();">
+	<input id="submit_button_name" type="submit">
 
       </div> 
 
@@ -111,23 +122,22 @@
 Samamish, WA
 Bellevue, WA
 Mercer Island, WA
-Seattle, WA
-</textarea>
+Seattle, WA</textarea>
 
-<br>
+	<br>
 
-<div id="status_text_area" style="border:1px solid blue">
-No status, yet.
-</div>
+	<div id="status_text_area" style="border:1px solid blue">
+	  No status, yet.
+	</div>
 
-<div id="summary_metrics_text_area" style="border:1px solid blue">
-No metrics, yet.
-</div>
+	<div id="summary_metrics_text_area" style="border:1px solid blue">
+	  No metrics, yet.
+	</div>
 
-<table id="results_table" border="1">
-</table>
+	<table id="results_table" border="1">
+	</table>
 
-<br>
+	<br>
 
       </form>
 
