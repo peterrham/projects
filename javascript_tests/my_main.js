@@ -6,7 +6,7 @@ window.onload = function() {console.log("onload called");};
 requirejs.config({
 //    enforceDefine: true,
     paths: {
-	google_maps: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
+//	google_maps: "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"
     },
     shim: {
 	'moment': {
@@ -19,6 +19,8 @@ requirejs.config({
 	}
     }
 });
+
+// require(["async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"], function(){});
 
 require(["google_maps", "gmaps_calc_route"], 
  	function(google_maps, gmaps_calc_route)

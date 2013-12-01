@@ -7,7 +7,8 @@
 // of neither of these "classes" share that method, apparently.
 // I still need to learn about javascript prototypes/classes
 
-define(["local_javascript_utilities"], function(local_javascript_utilities) {
+define(["local_javascript_utilities", "google_maps"], 
+       function(local_javascript_utilities, google_maps) {
 
 function
 secondsToMinutes(seconds)

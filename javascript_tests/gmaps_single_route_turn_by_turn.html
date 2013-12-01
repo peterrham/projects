@@ -39,29 +39,36 @@
        button are attached in the main javascript file loaded by
        requireJS.
 
+       TODO: 
+       - get rid of the direct inclusion of the google maps api global browser script
+       - ditto for jquery
+
     -->
 
   <head>
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+
     <title>Turn By Turn Directions</title>
 
     <link 
        href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" 
        rel="stylesheet">
 
-
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-
     <!-- 
 	 XXX, I wish I could manage these javascript files better so that they included each other ....
 	 I am progressively removing them using requireJS API and library
+
 	 -->
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+
 
     <script type="text/javascript" src="jquery.js"></script>          
 
-    <script data-main="main.js" src="require.js"></script>
+    <script data-main="my_main.js" src="require.js"></script>
 
     <!-- 
 	 XXX, do styles always need to be in the <head>. Not for hmtl5, right?
