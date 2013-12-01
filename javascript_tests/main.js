@@ -1,11 +1,16 @@
 
 console.log("foo bar main.js");
 console.log("inside #2 main.js");
-
 window.onload = function() {console.log("onload called");};
 
-// require(["util", "module2", "gmaps_calc_route", "jquery_throttle_test_script"], 
-// 	function(util, module2, gmaps_calc_route, jquery_throttle_test_script)
+requirejs.config({
+    shim: {
+	'moment': {
+	    deps: [],
+	    exports: 'Moment'
+	}
+    }
+});
 
 require(["gmaps_calc_route"], 
  	function(gmaps_calc_route)

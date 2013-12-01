@@ -1,4 +1,4 @@
-define(function() {
+define(['moment'], function(moment_global_script) {
 
 // this function is just for testing, it is not currently used
 
