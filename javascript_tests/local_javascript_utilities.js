@@ -1,4 +1,4 @@
-define(['moment'], function(moment_global_script) {
+define(['loglevel', 'moment'], function(loglevel, moment_global_script) {
 
 // this function is just for testing, it is not currently used
 
@@ -19,7 +19,7 @@ logConsoleEvent(str)
 {
     var theDate = new Date();
 
-    console.log(currentTimeAsString() + ": " + str);
+    loglevel.trace(currentTimeAsString() + ": " + str);
 }
 
 function 
