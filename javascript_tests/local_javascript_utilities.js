@@ -19,7 +19,7 @@ logConsoleEvent(str)
 {
     var theDate = new Date();
 
-    loglevel.trace(currentTimeAsString() + ": " + str);
+    loglevel.info(currentTimeAsString() + ": " + str);
 }
 
 function 

@@ -7,8 +7,8 @@
 // of neither of these "classes" share that method, apparently.
 // I still need to learn about javascript prototypes/classes
 
-define(['async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery', "local_javascript_utilities"],
-       function(gmaps, jquery, local_javascript_utilities) {
+define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery', "local_javascript_utilities"],
+       function(ll, gmaps, jquery, l) {
 
 console.log("gmaps_calc_route");
 function
@@ -124,7 +124,7 @@ function
 noGeolocation()
 {
 
-    local_javascript_utilities.logConsoleEvent("noGeolocation(): called");
+    ll.info("noGeolocation(): called");
     handleNoGeolocation(browserSupportFlag);
 }
 
@@ -133,11 +133,11 @@ function currentLocationPromise()
     var dfd = $.Deferred();
 
     if (navigator.geolocation) {
-        local_javascript_utilities.logConsoleEvent("geolocation:YES");
+        ll.info("geolocation:YES");
 
 	navigator.geolocation.getCurrentPosition(
 	    function(position) {
-		local_javascript_utilities.logConsoleEvent("currentLocationPromise(): got it!");
+		ll.info("currentLocationPromise(): got it!");
 		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 		map.setCenter(initialLocation);
 	    }, 
@@ -145,19 +145,19 @@ function currentLocationPromise()
 	);
 
     } else{
-        local_javascript_utilities.logConsoleEvent("geolocation:NO");
+        ll.info("geolocation:NO");
     }
 
 }
 
 function geocodePromise(address){
-    local_javascript_utilities.logConsoleEvent("geocodePromise()");
+    ll.info("geocodePromise()");
 
     var dfd = $.Deferred();
     
     geocoder.geocode( { 'address': address}, function(results, status) {
 
-	local_javascript_utilities.logConsoleEvent("before calling resolve");
+	ll.info("before calling resolve");
 
 	
 	if (status == google.maps.GeocoderStatus.OK) {
@@ -165,7 +165,7 @@ function geocodePromise(address){
 	    theLocation = results[0].geometry.location;
 
 
-	    local_javascript_utilities.logConsoleEvent("location = " + theLocation);
+	    ll.info("location = " + theLocation);
 
             var marker = new google.maps.Marker({
 		map: map,
@@ -200,7 +200,7 @@ function geocodePromise(address){
 
 function codeAddress() {
 
-    local_javascript_utilities.logConsoleEvent("codeAddress()");
+    ll.info("codeAddress()");
 
     var address = "4717 89th Avenue, SE, Mercer Island, WA 98040";
 
@@ -225,7 +225,7 @@ var homeLocation;
 var directionsDisplay;
 
 function initialize() {
-    local_javascript_utilities.logConsoleEvent("initialize():");
+    ll.info("initialize():");
 
     directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -252,11 +252,11 @@ function initialize() {
     directionsDisplay.setMap(map);
 
     if (navigator.geolocation) {
-        local_javascript_utilities.logConsoleEvent("geolocation:YES");
+        ll.info("geolocation:YES");
 
 	navigator.geolocation.getCurrentPosition(
 	    function(position) {
-		local_javascript_utilities.logConsoleEvent("got the browser geo code location!");
+		ll.info("got the browser geo code location!");
 		initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 		map.setCenter(initialLocation);
 	    }, 
@@ -264,7 +264,7 @@ function initialize() {
 	);
 
     } else{
-        local_javascript_utilities.logConsoleEvent("geolocation:NO");
+        ll.info("geolocation:NO");
     }
 
     codeAddress();
@@ -276,23 +276,23 @@ function initialize() {
     /*
       geocodePromise(mom).done(
       function(x)  {
-      local_javascript_utilities.logConsoleEvent('mm is done!');
-      local_javascript_utilities.logConsoleEvent('mom is ' + x);
+      ll.info('mm is done!');
+      ll.info('mom is ' + x);
       momLocation = x;
       }
       );
 
       geocodePromise(home).done(
       function(x)  {
-      local_javascript_utilities.logConsoleEvent('home is done!');
-      local_javascript_utilities.logConsoleEvent('home is ' + x);
+      ll.info('home is done!');
+      ll.info('home is ' + x);
       homeLocation = x;
       }
       );
 
       $.when(geocodePromise(mom), geocodePromise(home))
       .then(function (result){
-      local_javascript_utilities.logConsoleEvent('result = ' + result);
+      ll.info('result = ' + result);
       });
     */
 
@@ -300,8 +300,8 @@ function initialize() {
 	.then(function (result) { momLocation = result; return geocodePromise(home);})
 	.then(function (result) { homeLocation = result; return geocodePromise(mom);})
 	.then(function (result) { 
-	    local_javascript_utilities.logConsoleEvent("momLocation = " + momLocation);
-	    local_javascript_utilities.logConsoleEvent("homeLocation = " + homeLocation);});
+	    ll.info("momLocation = " + momLocation);
+	    ll.info("homeLocation = " + homeLocation);});
 }
 
 function 
@@ -315,8 +315,8 @@ min (x, y)
 function
 dumpDirectionsResponse(response)
 {
-    local_javascript_utilities.logConsoleEvent("dumpDirectionsResponse()");
-    local_javascript_utilities.logConsoleEvent("my object: %o", response);
+    ll.info("dumpDirectionsResponse()");
+    ll.info("my object: %o", response);
 
     var routes=response.routes.length;
     var legs;
@@ -333,8 +333,8 @@ dumpDirectionsResponse(response)
                 paths=response.routes[i].legs[j].steps[k].path.length;
 		for(m=0;m<paths;m++){
 		    path = response.routes[i].legs[j].steps[k].path[m];
-		    local_javascript_utilities.logConsoleEvent("path: %o", path);
-		    local_javascript_utilities.logConsoleEvent("path as string: %s", path.toString());
+		    ll.info("path: %o", path);
+		    ll.info("path as string: %s", path.toString());
 		}
 	    }
 	}
@@ -352,13 +352,13 @@ drawDirectionsPolyline(i, n, result)
     });
 
     if (!result) {
-	local_javascript_utilities.logConsoleEvent("result is *NULL*");
+	ll.info("result is *NULL*");
 	return;
     }
 
     if (result.routes != null) {
     } else {
-	local_javascript_utilities.logConsoleEvent("routes is *NULL*");
+	ll.info("routes is *NULL*");
 	return;
     }
 
@@ -395,7 +395,7 @@ drawDirectionsPolyline(i, n, result)
     // decide to draw the destination or not, since we are doing this in a loop
 
     if (i == (n - 2)) {
-	local_javascript_utilities.logConsoleEvent("last one");
+	ll.info("last one");
 	var marker = new google.maps.Marker({
 	    map: map,
 	    position: leg.end_location
@@ -412,18 +412,18 @@ newCalcRoutePromise(i, totalLength, startLocation, endLocation)
 {
     var dfd = $.Deferred();
 
-    local_javascript_utilities.logConsoleEvent("newCalcRoutePromise(): startLocation == " + startLocation);
+    ll.info("newCalcRoutePromise(): startLocation == " + startLocation);
 
-    local_javascript_utilities.logConsoleEvent("newCalcRoutePromise(): endLocation == " + endLocation);
+    ll.info("newCalcRoutePromise(): endLocation == " + endLocation);
 
     if (startLocation === undefined) {
-	local_javascript_utilities.logConsoleEvent("startLocation undefined");
+	ll.info("startLocation undefined");
 	return;
 
     }
 
     if (endLocation === undefined) {
-	local_javascript_utilities.logConsoleEvent("endLocation undefined");
+	ll.info("endLocation undefined");
 	return;
 
     }
@@ -444,16 +444,16 @@ newCalcRoutePromise(i, totalLength, startLocation, endLocation)
 
 	directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-		local_javascript_utilities.logConsoleEvent("status == *OK*");
-		local_javascript_utilities.logConsoleEvent("directionsService callback(): i == " + i.toString());
+		ll.info("status == *OK*");
+		ll.info("directionsService callback(): i == " + i.toString());
 		drawDirectionsPolyline(i, totalLength, response);
-		local_javascript_utilities.logConsoleEvent("after calling Polyline()");
+		ll.info("after calling Polyline()");
 	    } else {
 		clearSummaryPanel();
 		appendToSummaryPanel('<br>' + status);
 
-		local_javascript_utilities.logConsoleEvent("status == *ERROR*");
-		local_javascript_utilities.logConsoleEvent("status == " + status.toString());
+		ll.info("status == *ERROR*");
+		ll.info("status == " + status.toString());
 	    }
 	    dfd.resolve();
 	})}, 2000);
@@ -475,7 +475,7 @@ promiseDirectionsStrategy()
 	// XXX lot's of redundancy between the loops in the 3
 	// strategies we can factor this out
 
-	local_javascript_utilities.logConsoleEvent("usePromiseApproach");
+	ll.info("usePromiseApproach");
 
 	var n = my_lines.length;
 
@@ -503,19 +503,19 @@ sumDirectionsDuration(response)
 {
     var totalSeconds = 0;
 
-    local_javascript_utilities.logConsoleEvent("sumDirectionsDuration");
+    ll.info("sumDirectionsDuration");
 
     $.each(response.routes, function(index, value) {
-	local_javascript_utilities.logConsoleEvent("route = " + index);
+	ll.info("route = " + index);
 
 	$.each(value.legs, function(index, value) {
-	    local_javascript_utilities.logConsoleEvent("leg = " + index);
+	    ll.info("leg = " + index);
 	    
 	    totalSeconds += value.duration.value;
 	});
     });
 
-    local_javascript_utilities.logConsoleEvent("totalSeconds == " + totalSeconds);
+    ll.info("totalSeconds == " + totalSeconds);
 
     return totalSeconds;
 }
@@ -531,7 +531,7 @@ sumDirectionsDistance(response)
 	});
     });
 
-    local_javascript_utilities.logConsoleEvent("totalDistance == " + totalDistance);
+    ll.info("totalDistance == " + totalDistance);
 
     return totalDistance;
 }
@@ -577,7 +577,7 @@ addRowToTable(rowNumber, tableDescriptor, rowHash)
     var cell;
 
     $(tableDescriptor.columnDefinitions).each(function(index, item) {
-	local_javascript_utilities.logConsoleEvent("index = " + index);
+	ll.info("index = " + index);
 	cell = row.insertCell(index);
 	cell.innerHTML = rowHash[item] || "";
     });    
@@ -593,7 +593,7 @@ addTableHeader(tableDescriptor)
     var cell;
 
     $(tableDescriptor.columnDefinitions).each(function(index, item) {
-	local_javascript_utilities.logConsoleEvent("index = " + index);
+	ll.info("index = " + index);
 	cell = row.insertCell(index);
 	cell.innerHTML = tableDescriptor.columnDefinitions[index];
     });    
@@ -644,13 +644,13 @@ makeDirectionsRequest(batchElement, start, end, waypts)
     var result = directionsService.route(request, function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
 
-	    local_javascript_utilities.logConsoleEvent("got directionsResponse");
+	    ll.info("got directionsResponse");
 
-	    local_javascript_utilities.logConsoleEvent("batchElement = " + batchElement);
-	    local_javascript_utilities.logConsoleEvent(batchElement);
-	    local_javascript_utilities.logConsoleEvent(batchElement.batch);
-	    local_javascript_utilities.logConsoleEvent(batchElement.start);
-	    local_javascript_utilities.logConsoleEvent(batchElement.end);
+	    ll.info("batchElement = " + batchElement);
+	    ll.info(batchElement);
+	    ll.info(batchElement.batch);
+	    ll.info(batchElement.start);
+	    ll.info(batchElement.end);
 	    
 	    batchElement.response = response;
 
@@ -670,7 +670,7 @@ makeDirectionsRequest(batchElement, start, end, waypts)
 	}
     });
 
-    local_javascript_utilities.logConsoleEvent("result == " + result);
+    ll.info("result == " + result);
 
     return dfd.promise();
 }
@@ -683,7 +683,7 @@ batchDirectionsStrategy()
     {
 	var max_gmaps_waypoints = 8;
 
-	local_javascript_utilities.logConsoleEvent("use batchDirectionsStrategy");
+	ll.info("use batchDirectionsStrategy");
 
 	var n = my_lines.length;
 
@@ -705,11 +705,11 @@ batchDirectionsStrategy()
 
 	var quotient = Math.floor(n / y);
 
-	local_javascript_utilities.logConsoleEvent("quotient = " + quotient);
+	ll.info("quotient = " + quotient);
 	
 	var remainder = n % y;
 
-	local_javascript_utilities.logConsoleEvent("remainder = " + remainder);
+	ll.info("remainder = " + remainder);
 
 	var lim;
 
@@ -719,7 +719,7 @@ batchDirectionsStrategy()
 	    lim = quotient + 1;
 	}
 
-	local_javascript_utilities.logConsoleEvent("lim = " + lim);
+	ll.info("lim = " + lim);
 	
 	var start_index;
 	var end_index;
@@ -747,7 +747,7 @@ batchDirectionsStrategy()
 	    
 
 	    for (var i = start_index + 1; i < end_index; i++) {
-		local_javascript_utilities.logConsoleEvent(my_lines[i]);
+		ll.info(my_lines[i]);
 		waypts.push({location:my_lines[i], stopover:true});
 	    }
 
@@ -768,13 +768,13 @@ batchDirectionsStrategy()
 	    deferredArray.push(promise);
 
 	    promise.then(function() {
-		local_javascript_utilities.logConsoleEvent("one request finished");
+		ll.info("one request finished");
 	    });
 	}
 	
 	$.when.apply($, deferredArray).then(function() {
-	    local_javascript_utilities.logConsoleEvent("all the deferreds have completed");
-	    local_javascript_utilities.logConsoleEvent("batch.length == " + batch.length);
+	    ll.info("all the deferreds have completed");
+	    ll.info("batch.length == " + batch.length);
 
 	    // turn the batch into a leg array
 	    var legs = [];
@@ -808,7 +808,7 @@ batchDirectionsStrategy()
 		}
 	    });
 		
-	    local_javascript_utilities.logConsoleEvent("number of legs = " + legs.length);
+	    ll.info("number of legs = " + legs.length);
 
 		   
 	    // iterate over the batch and sum the total time first
@@ -820,8 +820,8 @@ batchDirectionsStrategy()
 		totalDistance += sumDirectionsDistance(batchElement.response);
 	    });
 
-	    local_javascript_utilities.logConsoleEvent("totalSeconds (total) = " + totalSeconds);
-	    local_javascript_utilities.logConsoleEvent("totalDistance (total) = " + totalDistance);
+	    ll.info("totalSeconds (total) = " + totalSeconds);
+	    ll.info("totalDistance (total) = " + totalDistance);
 
 	    var totalMinutes = secondsToMinutes(totalSeconds);
 
@@ -840,16 +840,16 @@ batchDirectionsStrategy()
 		var i = 0;
 		var nElements = batch.length;
 		
-		local_javascript_utilities.logConsoleEvent("nElements == " + nElements);
+		ll.info("nElements == " + nElements);
 
 		$.each(batch, function(index, batchElement) {
 		    var response = batchElement.response;
 		    var numRoutes = response.routes.length;
 		    var numLegs = response.routes[0].legs.length;
 
-		    local_javascript_utilities.logConsoleEvent("index == " + index);
-		    local_javascript_utilities.logConsoleEvent("numRoutes == " + numRoutes);
-		    local_javascript_utilities.logConsoleEvent("numLegs == " + numLegs);
+		    ll.info("index == " + index);
+		    ll.info("numRoutes == " + numRoutes);
+		    ll.info("numLegs == " + numLegs);
 
 		    i += displayDirectionsResult(i, batchElement.response);
 
@@ -876,12 +876,12 @@ directDirectionsStrategy()
     {
 	var n = my_lines.length;
 
-	local_javascript_utilities.logConsoleEvent("useDirectApproach");
+	ll.info("useDirectApproach");
 	
 	for (var i = 0; i < (n - 1); i++) {
-	    local_javascript_utilities.logConsoleEvent("directApproach(): i == " + i.toString());
+	    ll.info("directApproach(): i == " + i.toString());
 
-            local_javascript_utilities.fireOffDirectionsRequest(i, n, my_lines[i], my_lines[i+1]);
+            l.fireOffDirectionsRequest(i, n, my_lines[i], my_lines[i+1]);
 
 	}
     }
@@ -906,7 +906,7 @@ throttledDirectionsStrategy()
 	createClosure(i, totalLength, src, dst)
 	{
 	    return function() {
-		local_javascript_utilities.fireOffDirectionsRequest(i, totalLength, src, dst);
+		l.fireOffDirectionsRequest(i, totalLength, src, dst);
 	    };
 	}
 
@@ -972,11 +972,11 @@ calcRoute()
     createResultsTable();
 
     var textArea = document.getElementById('status_text_area');
-    textArea.innerHTML = 'Calculating: ' + local_javascript_utilities.currentTimeAsString() + " ...";
+    textArea.innerHTML = 'Calculating: ' + l.currentTimeAsString() + " ...";
 
     var lines = document.listOfLocations.inputList.value;
 
-    local_javascript_utilities.logConsoleEvent(lines);
+    ll.info(lines);
 
     my_lines = lines.split(/\n/); 
 
@@ -984,11 +984,11 @@ calcRoute()
 
     var n = my_lines.length;
 
-    local_javascript_utilities.logConsoleEvent(n);
+    ll.info(n);
 
-    local_javascript_utilities.logConsoleEvent(my_lines);
+    ll.info(my_lines);
 
-    local_javascript_utilities.logConsoleEvent("check n");
+    ll.info("check n");
 
     if (n < 2) {
 	alert('Need at least two addresses!');
