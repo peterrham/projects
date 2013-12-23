@@ -1,28 +1,32 @@
 
-console.log("foo bar main.js");
-console.log("inside #2 main.js");
+console.log("my_main.js");
+
 window.onload = function() {console.log("onload called");};
+
 console.log("after setting onload");
 
 console.log("before: require()");
-require(['jquery', 'loglevel', "gmaps_calc_route"], 
- 	function(jquery, l, gmaps_calc_route)
+require(['local_javascript_utilities', 'jquery-1.11.0-pre', 'loglevel', "gmaps_calc_route"], 
+ 	function(lj, jquery, l, gmaps_calc_route)
 {
-
-    console.log("inside: require()");
-    gmaps_calc_route.initialize();
-    console.log("after initialize");
-
-    l.setLevel("trace");
+   	l.setLevel("trace");
     l.setLevel("error");
-    l.disableAll();
     l.enableAll();
+	l.setLevel("debug");
+    l.disableAll();
+	
+    l.info(lj.currentTimeAsString()+":inside: require()");
+    gmaps_calc_route.initialize();
+    
+    l.info("after initialize");
+
+ 
 
     l.info("after setting the function");
 
     $(document).ready(function() {
 
-	console.log("ready()");
+	l.info("ready()");
 	l.info("document ready called");
 
 	gmaps_calc_route.initialize();
@@ -32,7 +36,7 @@ require(['jquery', 'loglevel', "gmaps_calc_route"],
 	});
     });
 
-    console.log("after ready");
+    l.info("after ready");
 });
 
 console.log("after: require()");

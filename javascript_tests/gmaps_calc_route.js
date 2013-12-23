@@ -7,10 +7,10 @@
 // of neither of these "classes" share that method, apparently.
 // I still need to learn about javascript prototypes/classes
 
-define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery', "local_javascript_utilities"],
+define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery-1.11.0-pre', "local_javascript_utilities"],
        function(ll, gmaps, jquery, l) {
 
-console.log("gmaps_calc_route");
+ll.info("gmaps_calc_route");
 function
 secondsToMinutes(seconds)
 {
@@ -896,7 +896,7 @@ throttledDirectionsStrategy()
 	
 	var n = my_lines.length;
 
-	console.log("usingThrottledApproach");
+	ll.info("usingThrottledApproach");
 
 	// create an array of functions to call asynch
 
@@ -956,14 +956,7 @@ appendToSummaryPanel(str)
 function 
 calcRoute() 
 {
-    console.log("inside calcRoute()");
-
-    require(["print", "mod_mylog"], function (print, mod_mylog) {
-	print.doit();
-	mod_mylog.mylog("using mod_mylog");
-    });
-
-    console.log("after require print");
+    ll.info("inside calcRoute()");
 
     cleanUpPolylineArray();
 

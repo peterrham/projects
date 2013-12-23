@@ -10,7 +10,7 @@
        including the turn by turn directions highlight along the road
        network, instead of straight, Euclidean lines.
 
-       The google geolocation of users current address, determined by IP
+n       The google geolocation of users current address, determined by IP
        address geolocation from google maps, only works (so far) if the
        web page is retrieved from a web server and not from the file
        server.
@@ -54,6 +54,10 @@
 
     <link href="style.css" rel="stylesheet">
 
+    <script>
+      window.onload = function() {console.log("onload from html");};
+    </script>
+
     <script data-main="my_main.js" src="require.js"></script>
 
   </head>
@@ -70,6 +74,10 @@
 	<input id="submit_button_name" type="submit">
 
       </div> 
+
+<!-- 
+     XXX I think that I need to be consistent and use the "id" field rather than the name field. Look into javascript best practices.
+-->
 
       <form name="listOfLocations">
 
