@@ -10,10 +10,10 @@
        including the turn by turn directions highlight along the road
        network, instead of straight, Euclidean lines.
 
-n       The google geolocation of users current address, determined by IP
-       address geolocation from google maps, only works (so far) if the
-       web page is retrieved from a web server and not from the file
-       server.
+       The google geolocation of users current address, determined by
+       IP address geolocation from google maps, only works (so far) if
+       the web page is retrieved from a web server and not from the
+       file server.
 
        There is a limit on the number and the size of the turn by turn
        directions requests made to google maps over a period of time for
@@ -75,13 +75,9 @@ n       The google geolocation of users current address, determined by IP
 
       </div> 
 
-<!-- 
-     XXX I think that I need to be consistent and use the "id" field rather than the name field. Look into javascript best practices.
--->
+      <form id="listOfLocations">
 
-      <form name="listOfLocations">
-
-	<textarea name="inputList" rows="10" cols="30">
+	<textarea id="inputList" rows="10" cols="30">
 Samamish, WA
 Bellevue, WA
 Mercer Island, WA

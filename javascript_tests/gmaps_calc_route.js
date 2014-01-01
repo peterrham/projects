@@ -964,10 +964,15 @@ calcRoute()
 
     createResultsTable();
 
-    var textArea = document.getElementById('status_text_area');
-    textArea.innerHTML = 'Calculating: ' + l.currentTimeAsString() + " ...";
+    var textArea = $("#status_text_area");
 
-    var lines = document.listOfLocations.inputList.value;
+    textArea.text('Calculating: ' + l.currentTimeAsString() + " ...");
+
+    var inputList = $("#inputList");
+
+    var lines = inputList.val();
+
+    ll.info("after lines");
 
     ll.info(lines);
 
