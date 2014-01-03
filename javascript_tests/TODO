@@ -1,0 +1,10 @@
+
+# considered calling this file TODO.txt, but TODO seems more standard
+  on Linux, but not as great on windows since there is no file
+  extension and thus no assumption of ASCII as in unix
+
+- gmaps_single ....
+  - remove double geolocation check 
+  - do not go to chicago (default location) on the map first before going to the geocoded one
+  - get rid of ugly and large index numbers on route path
+

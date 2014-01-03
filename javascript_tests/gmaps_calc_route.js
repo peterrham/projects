@@ -106,6 +106,10 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
     var directionsService = new google.maps.DirectionsService();
     var map;
 
+
+    // XXX this function is somewhat redundant with non-promise way of geocoding, duplicated code
+
+
     function
     noGeolocation()
     {
@@ -173,7 +177,7 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 		gPolylineArray.push(label);
 		label.set('zIndex', 1234);
 		label.bindTo('position', marker, 'position');
-		label.set('text', "Home");
+		label.set('text', address);
 		//          label.bindTo('text', marker, 'position');
 
 		dfd.resolve(theLocation);
@@ -185,46 +189,18 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	return dfd.promise();
     }
 
-    function codeAddress() {
-
-	ll.info("codeAddress()");
-
-	var address = "4717 89th Avenue, SE, Mercer Island, WA 98040";
-
-	geocoder.geocode( { 'address': address}, function(results, status) {
-	    if (status == google.maps.GeocoderStatus.OK) {
-		var marker = new google.maps.Marker({
-		    map: map,
-		    position: results[0].geometry.location
-		});
-		gPolylineArray.push(marker);
-	    } else {
-		alert("Geocode was not successful for the following reason: " + status);
-	    }
-	});
-    }
-
-
     // XXX Global variables?
-
-    var momLocation;
-    var homeLocation;
     var directionsDisplay;
 
-    function initialize() {
-	ll.info("initialize():");
+    function createMapWithCenterAt(center)
+    {
 
 	directionsDisplay = new google.maps.DirectionsRenderer();
-
-	// XXX global variable
-	geocoder = new google.maps.Geocoder();
-
-	var chicago = new google.maps.LatLng(41.850033, -87.6500523);
 
 	var mapOptions = {
 	    zoom: 11,
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
-	    center: chicago,
+	    center: center,
 	    zoomControl: true,
 	    panControl: true,
 	    zoomControl: true,
@@ -238,29 +214,69 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
 	directionsDisplay.setMap(map);
 
+    }
+
+    function createMapWithCenterAtDefaultLocation() {
+
+	var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+	
+	createMapWithCenterAt(chicago);
+
+    }
+
+    function initialize() {
+	ll.info("initialize():");
+
+
 	if (navigator.geolocation) {
 	    ll.info("geolocation:YES");
 
+	    // XXX I want to do this via promises I think in the future
 	    navigator.geolocation.getCurrentPosition(
 		function(position) {
 		    ll.info("got the browser geo code location!");
-		    var currentLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-		    map.setCenter(currentLocation);
+			var currentLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+		    //		    map.setCenter(currentLocation);
+		    createMapWithCenterAt(currentLocation);
 		}, 
-		noGeolocation
+		// XXX should this function have an argument list? What is passed by default? Would there be an error if something was?
+		function() {
+		    noGeolocation();
+		    createMapWithCenterAtDefaultLocation();
+		    }
 	    );
 
 	} else{
 	    ll.info("geolocation:NO");
+	    // XXX some code redundancy here with above, can promises help with this logic?
+	    createMapWithCenterAtDefaultLocation();
 	}
 
-	codeAddress();
+	// XXX global variable
+	geocoder = new google.maps.Geocoder();
 
 	var home = "4717 89th Avenue, SE, Mercer Island, WA 98040";
 
 	var mom = "419 State Street, Johnstown, PA 15905";
 
+	var momLocation;
+	var homeLocation;
+
+	// XXX I'm glad that I have succeeded at least partially using promises, but 
+	// this could be better. I have not figured promises out fully yet
+
+	geocodePromise(mom)
+	    .then(function (result) {
+		momLocation = result; 
+		ll.info("momLocation = " + momLocation);
+		return geocodePromise(home);})
+	    .then(function (result) { 
+		homeLocation = result;
+		ll.info("homeLocation = " + homeLocation);});
+
+
 	/*
+	  // XXX here's an alternative way to use promises, that I have not quite figured out
 	  geocodePromise(mom).done(
 	  function(x)  {
 	  ll.info('mm is done!');
@@ -283,12 +299,7 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	  });
 	*/
 
-	geocodePromise(mom)
-	    .then(function (result) { momLocation = result; return geocodePromise(home);})
-	    .then(function (result) { homeLocation = result; return geocodePromise(mom);})
-	    .then(function (result) { 
-		ll.info("momLocation = " + momLocation);
-		ll.info("homeLocation = " + homeLocation);});
+
     }
 
     function 
