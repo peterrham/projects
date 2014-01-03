@@ -39,6 +39,19 @@
        button are attached in the main javascript file loaded by
        requireJS.
 
+       XXX todo (things to fix/improve)
+       - get rid of global variables, expecially in the "calc" (sp.) .js file
+       - error message when current location is not available is not good, it's wrong
+       - screen starts out in chicago first, which is not the greatest
+       - not sure what behavior should be when geolocation is not available
+       - jslint http://www.jslint.com/lint.html
+       - need to undelete javascript_utilities.js since it is still used in the simple examples and it has the benefit that
+       - it does not depend upon the "require" library as does local_javascript_utilities.js, need to clean this up, since file names are too
+       - similar and the contents are the same
+       - I think that using require library is too heavy weight for simple javascript examples ...
+       - move this list to a TODO file
+       - configure selenium to automatically test my stuff, or at least see it executed without typing it myself to verify my changes
+
     -->
 
   <head>

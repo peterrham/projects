@@ -11,16 +11,11 @@ require(['local_javascript_utilities', 'jquery-1.11.0-pre', 'loglevel', "gmaps_c
 {
    	l.setLevel("trace");
     l.setLevel("error");
-    l.enableAll();
-	l.setLevel("debug");
     l.disableAll();
-	
-    l.info(lj.currentTimeAsString()+":inside: require()");
-    gmaps_calc_route.initialize();
-    
-    l.info("after initialize");
+    l.enableAll();
+    l.setLevel("debug");
 
- 
+    l.info(lj.currentTimeAsString()+":inside: require()");
 
     l.info("after setting the function");
 
