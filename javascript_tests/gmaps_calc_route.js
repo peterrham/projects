@@ -99,9 +99,6 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	this.span_.innerHTML = this.get('text').toString();
     };
 
-    var geocoder;
-
-
     var directionDisplay;
     var directionsService = new google.maps.DirectionsService();
     var map;
@@ -141,7 +138,29 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
     }
 
-    function geocodePromise(address){
+    function createMarkerWithLabel(map, position, labelText)
+    {
+    	var marker = new google.maps.Marker({
+	    map: map,
+	    position: position
+	    });
+	
+	var label = new Label({
+	    map: map
+	});
+
+	// XXX need to change the name and use of global variable
+	gPolylineArray.push(marker);
+
+	label.bindTo('position', marker, 'position');
+	label.set('zIndex', 1234);
+	label.set('text', labelText);
+
+	// XXX is there a better way to clear this
+	gPolylineArray.push(label);
+    }
+
+    function geocodePromise(geocoder, address){
 	ll.info("geocodePromise()");
 
 	var dfd = $.Deferred();
@@ -150,35 +169,13 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
 	    ll.info("before calling resolve");
 
-	    
 	    if (status == google.maps.GeocoderStatus.OK) {
 
 		var theLocation = results[0].geometry.location;
 
-
 		ll.info("theLocation = " + theLocation);
 
-		var marker = new google.maps.Marker({
-		    map: map,
-		    position: results[0].geometry.location
-
-		});
-
-		// XXX need to change the name and use of global variable
-		gPolylineArray.push(marker);
-
-		var label = new Label({
-		    map: map
-		});
-
-		// XXX PRH, should name this to another array and store better in an 
-		// "application object" rather than a global variable
-
-		gPolylineArray.push(label);
-		label.set('zIndex', 1234);
-		label.bindTo('position', marker, 'position');
-		label.set('text', address);
-		//          label.bindTo('text', marker, 'position');
+		createMarkerWithLabel(map, theLocation, address);
 
 		dfd.resolve(theLocation);
 	    } else {
@@ -252,8 +249,7 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	    createMapWithCenterAtDefaultLocation();
 	}
 
-	// XXX global variable
-	geocoder = new google.maps.Geocoder();
+	var geocoder = new google.maps.Geocoder();
 
 	var home = "4717 89th Avenue, SE, Mercer Island, WA 98040";
 
@@ -265,11 +261,11 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	// XXX I'm glad that I have succeeded at least partially using promises, but 
 	// this could be better. I have not figured promises out fully yet
 
-	geocodePromise(mom)
+	geocodePromise(geocoder, mom)
 	    .then(function (result) {
 		momLocation = result; 
 		ll.info("momLocation = " + momLocation);
-		return geocodePromise(home);})
+		return geocodePromise(geocoder, home);})
 	    .then(function (result) { 
 		homeLocation = result;
 		ll.info("homeLocation = " + homeLocation);});
@@ -374,34 +370,14 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	// assumes only one leg
 	var leg = result.routes[0].legs[0];
 
-	var marker = new google.maps.Marker({
-	    map: map,
-	    position: leg.start_location
-	});
-
-	gPolylineArray.push(marker);
-
-	var label = new Label({
-	    map: map
-	});
-	
-	gPolylineArray.push(label);
-
-	label.bindTo('position', marker, 'position');
-	label.set('text', (i+1).toString());
+	createMarkerWithLabel(map, leg.start_location, (i+1).toString());
 
 	// decide to draw the destination or not, since we are doing this in a loop
 
 	if (i == (n - 2)) {
 	    ll.info("last one");
-	    var marker = new google.maps.Marker({
-		map: map,
-		position: leg.end_location
-	    });
 
-	    label.bindTo('position', marker, 'position');
-	    label.set('text', (i+2).toString());
-
+	    createMarkerWithLabel(map, leg.end_location, (i+2).toString());
 	}
     }
 
@@ -955,7 +931,9 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
     {
 	ll.info("inside calcRoute()");
 
-	cleanUpPolylineArray();
+	
+	// XXX, not sure if I should be cleaning up the array or not and how to do so
+	// cleanUpPolylineArray();
 
 	clearSummaryPanel();
 
