@@ -7,6 +7,7 @@
 // of neither of these "classes" share that method, apparently.
 // I still need to learn about javascript prototypes/classes
 
+
 define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery-1.11.0-pre', "local_javascript_utilities"], function(ll, gmaps, jquery, l) {
 
     ll.info("gmaps_calc_route");
@@ -175,8 +176,6 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
 		ll.info("theLocation = " + theLocation);
 
-		createMarkerWithLabel(map, theLocation, address);
-
 		dfd.resolve(theLocation);
 	    } else {
 		alert("Geocode was not successful for the following reason: " + status);
@@ -221,9 +220,16 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
     }
 
-    function initialize() {
-	ll.info("initialize():");
 
+    // XXX this makes an asynchronous call to getCurrentPosition, so I
+    // need a promise, especially in the case where takes a long time
+    // to approve the geocode reading manually while the rest of the
+    // script completes do I need to find a way to wrap a generic
+    // function into a promise
+
+    function asynchCenterMap() {
+	ll.info("asynchCenterMap()");
+	var dfd = $.Deferred();
 
 	if (navigator.geolocation) {
 	    ll.info("geolocation:YES");
@@ -232,14 +238,23 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	    navigator.geolocation.getCurrentPosition(
 		function(position) {
 		    ll.info("got the browser geo code location!");
-			var currentLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-		    //		    map.setCenter(currentLocation);
+		    
+		    var currentLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+
 		    createMapWithCenterAt(currentLocation);
+		    dfd.resolve();
 		}, 
 		// XXX should this function have an argument list? What is passed by default? Would there be an error if something was?
 		function() {
+		    ll.info("arguments = " + arguments);
+		    var objects = arguments;
+		    
+		    ll.info("objects.length = " + objects.length);
+		    ll.info("objects[0] = " + objects[0]);
+		    ll.info("objects[0].message = " + objects[0].message);
 		    noGeolocation();
 		    createMapWithCenterAtDefaultLocation();
+		    dfd.resolve();
 		    }
 	    );
 
@@ -247,55 +262,112 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	    ll.info("geolocation:NO");
 	    // XXX some code redundancy here with above, can promises help with this logic?
 	    createMapWithCenterAtDefaultLocation();
+	    dfd.resolve();
 	}
 
-	var geocoder = new google.maps.Geocoder();
+	return dfd.promise();
 
-	var home = "4717 89th Avenue, SE, Mercer Island, WA 98040";
+    }
 
-	var mom = "419 State Street, Johnstown, PA 15905";
+    function testDeferred()
 
-	var momLocation;
-	var homeLocation;
+    {
+	// XXX the use of promises below are experiments and not necessary for the execution of this program, need to clean these up
+	// into an experimental section that is optionally run, or some test framework code
 
-	// XXX I'm glad that I have succeeded at least partially using promises, but 
-	// this could be better. I have not figured promises out fully yet
+	// here's an alternative way to use promises, that is more in parallel
 
-	geocodePromise(geocoder, mom)
-	    .then(function (result) {
-		momLocation = result; 
-		ll.info("momLocation = " + momLocation);
-		return geocodePromise(geocoder, home);})
-	    .then(function (result) { 
-		homeLocation = result;
-		ll.info("homeLocation = " + homeLocation);});
+	geocodePromise(geocoder, mom).done(
+	    function(x)  {
+		ll.info('in parallel mom is done!');
+		ll.info('mom is ' + x);
+		momLocation = x;
+	    });
+
+	geocodePromise(geocoder, home).done(
+	    function(x)  {
+		ll.info('in parallel home is done!');
+		ll.info('home is ' + x);
+		homeLocation = x;
+	    });
+
+	$.when(geocodePromise(geocoder, mom), geocodePromise(geocoder, home))
+	    .then(function (result){
+		// XXX for some reason the "mom" results is returned and not the home results
+		// first one is returned as the return value?
+		ll.info('in parallel using when: using promises "then" result = ' + result);
+	    });
+
+	var deferreds = [];
+
+	deferreds.push(geocodePromise(geocoder, mom));
+	deferreds.push(geocodePromise(geocoder, home));
+
+	$.when.apply($, deferreds)
+	    .then(function (){
+		var objects = arguments;
+		ll.info('in parallel: objects = ' + objects);
+		ll.info('in parallel: objects[0] = ' + objects[0]);
+		ll.info('in parallel: objects[1] = ' + objects[1]);
+	    });
+
+	// using multiple deferred's without the apply
+	deferreds.push(geocodePromise(geocoder, mom));
+	deferreds.push(geocodePromise(geocoder, home));
+
+	// let's try this in parallel
+	$.when(geocodePromise(geocoder, mom), geocodePromise(geocoder, home), geocodePromise(geocoder, home))
+	    .then(function (mom, home, homeAgain){
+		var objects = arguments;
+		ll.info('without apply: mom = ' + mom);
+		ll.info('without apply: home = ' + home);
+		ll.info('without apply: homeAgain = ' + homeAgain);
+	    });
+    }
 
 
-	/*
-	  // XXX here's an alternative way to use promises, that I have not quite figured out
-	  geocodePromise(mom).done(
-	  function(x)  {
-	  ll.info('mm is done!');
-	  ll.info('mom is ' + x);
-	  momLocation = x;
-	  }
-	  );
 
-	  geocodePromise(home).done(
-	  function(x)  {
-	  ll.info('home is done!');
-	  ll.info('home is ' + x);
-	  homeLocation = x;
-	  }
-	  );
+    
+    function initialize() {
+	ll.info("initialize():");
 
-	  $.when(geocodePromise(mom), geocodePromise(home))
-	  .then(function (result){
-	  ll.info('result = ' + result);
-	  });
-	*/
+	// XXX I want to find a way to create a deferred with and
+	// immediate function, see if it can be more elegant than
+	// creating a named function
 
+	asynchCenterMap().then(
+	    function() {
+		ll.info("inside center map callback()");
 
+		var geocoder = new google.maps.Geocoder();
+
+		var home = "4717 89th Avenue, SE, Mercer Island, WA 98040";
+
+		var mom = "419 State Street, Johnstown, PA 15905";
+
+		var momLocation;
+		var homeLocation;
+		// XXX I'm glad that I have succeeded at least partially using promises, but 
+		// this could be better. I have not figured promises out fully yet
+
+		geocodePromise(geocoder, mom)
+		    .then(function (result) {
+			momLocation = result; 
+			ll.info("momLocation = " + momLocation);
+			createMarkerWithLabel(map, momLocation, mom);
+			return geocodePromise(geocoder, home);})
+		    .then(function (result) { 
+			homeLocation = result;
+			ll.info("homeLocation = " + homeLocation);
+			createMarkerWithLabel(map, homeLocation, home);
+		    });
+
+		var testPromises = false;
+
+		if (testPromises) {
+		    testDeferred();
+		}
+	    });
     }
 
     function 
