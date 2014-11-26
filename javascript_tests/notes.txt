@@ -1,0 +1,22 @@
+
+-- Regarding my tcpdump tests for browsers
+
+Notice that for chrome and multiple images
+- there's a gap between downloading the html body and the images
+- the images are still downloaded in series
+- the extent to which the downloads are in series seems to vary a bit due to what? threading race condition
+
+firefox 
+- has the same issue with the gap, but of a different length
+- it's hard to see the in series versus in parallel of firefox, since the downloads ae so quick
+- this may be changed due to the "max threads in parallel configuration" in terms of "pipelinining"
+
+- let's see if I cann connect internet explorer
+
+on windows remote talking to s3 via beanstalk:
+ - chrome: the initial file download is 200 to 300 ms, still the next request is 60 ms after, still a break
+
+- firefox: the gap still exists on firefox, show I try multiple download if they are in series?
+
+- internet explorer loads the right in series which is great
+

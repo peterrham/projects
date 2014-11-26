@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+    <title>Testing Javascript Require</title>
+
+  <!-- 
+
+       Noticing some require() javascript module loading delays. Might
+       have to do with waiting for top level events or dependency
+       cycles?
+
+    -->
+
+  <!--
+    <script>
+      console.log("script before loading require");
+    </script>
+    -->
+
+    <!--
+       <script data-main="test_main.js" src="require.js"></script>
+       <script data-main="test_main.js" src="test_main.js"></script>
+       <script data-main="test_main.js" src="test_main.js"></script>
+       <script data-main="test_main.js" src="test_main.js"></script>
+    -->
+
+    <!--
+
+    <script>
+      console.log("script after loading require");
+    </script>
+    -->
+
+
+  </head>
+
+
+
+  <body onload="
+		(function() 
+		{
+		// var x = 3; 
+		//alert(x);
+
+		var fileref=document.createElement('script');
+		fileref.setAttribute('type','text/javascript');
+                fileref.setAttribute('src', 'root_script.js');
+	        document.getElementsByTagName('head')[0].appendChild(fileref);
+		}
+		)();
+		">
+
+    <image height="10" width="10" onload="console.log('image onload()');" image src="empty_square_normal.gif">
+
+    <!--
+    
+    <script>
+      console.log("script at end of body");
+    </script>
+
+    -->
+
+  </body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Simple Require</title>
+
+  <!-- 
+       Testing how to use the require() module with quicker loading by avoiding inline scripts.
+    -->
+
+  </head>
+
+  <body onload="
+		(function()
+		{
+		var fileref=document.createElement('script');
+		fileref.setAttribute('type','text/javascript');
+                fileref.setAttribute('src', 'require_root.js');
+	        document.getElementsByTagName('head')[0].appendChild(fileref);
+		}
+		)();
+		">
+  </body>
+
+</html>
