@@ -1,4 +1,11 @@
 
+
+    html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+
       #directions_panel {
       margin:20px;background-color:Lavender;
       }

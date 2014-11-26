@@ -8,7 +8,12 @@
 // I still need to learn about javascript prototypes/classes
 
 
-define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery-1.11.0-pre', "local_javascript_utilities"], function(ll, gmaps, jquery, l) {
+// define(['loglevel', 'jquery-1.11.1', "local_javascript_utilities"], function(ll, gmaps, jquery, l) {
+
+// XXX removing the asynch definetely broke the above, also, this did not help improve this
+// XXX testing with above 
+
+define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery-1.11.1', "local_javascript_utilities"], function(ll, gmaps, jquery, l) {
 
     ll.info("gmaps_calc_route");
     function

@@ -2,6 +2,13 @@
 
 <html>
 
+  <head>
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+    <title>Turn By Turn Directions</title>
+
   <!-- 
 
        This simple web application takes a list of addresses, plots them
@@ -46,37 +53,58 @@
        - not sure what behavior should be when geolocation is not available
        - jslint http://www.jslint.com/lint.html
        - need to undelete javascript_utilities.js since it is still used in the simple examples and it has the benefit that
-       - it does not depend upon the "require" library as does local_javascript_utilities.js, need to clean this up, since file names are too
-       - similar and the contents are the same
-       - I think that using require library is too heavy weight for simple javascript examples ...
-       - move this list to a TODO file
-       - configure selenium to automatically test my stuff, or at least see it executed without typing it myself to verify my changes
+
+       - it does not depend upon the "require" library as does
+
+       - local_javascript_utilities.js, need to clean this up, since
+       file names are too - similar and the contents are the same - I
+       think that using require library is too heavy weight for simple
+       javascript examples ...  - move this list to a TODO file -
+       configure selenium to automatically test my stuff, or at least
+       see it executed without typing it myself to verify my changes
 
     -->
 
-  <head>
-    <meta charset="utf-8">
-    
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-
-    <title>Turn By Turn Directions</title>
+  <!--
 
     <link 
        href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css"
+
        rel="stylesheet">
 
+
+
+
+
+
+    -->
+
     <link href="style.css" rel="stylesheet">
+    
+  <!--  XXX This should be a no op, since it gets overridden by another set to onload
 
     <script>
       window.onload = function() {console.log("onload from html");};
     </script>
 
+    -->
+
+    <script>
+      console.log("script before loading require");
+    </script>
+
     <script data-main="my_main.js" src="require.js"></script>
+
+    <script>
+      console.log("script after loading require");
+    </script>
+
 
   </head>
 
   <body>
 
+    <image height="10" width="10" src="empty_square_normal.gif">
     <div id="map-canvas"></div>
 
     <div id="control_panel">
@@ -117,6 +145,10 @@ Seattle, WA</textarea>
       <div id="directions_panel"></div>
 
     </div>
+
+    <script>
+      console.log("script at end of body");
+    </script>
 
   </body>
 

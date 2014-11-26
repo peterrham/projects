@@ -8,6 +8,10 @@
 /*jslint regexp: true, nomen: true, sloppy: true */
 /*global window, navigator, document, importScripts, setTimeout, opera */
 
+
+// XXXX peterham: testing performance
+console.log("before requirejs()");
+
 var requirejs, require, define;
 (function (global) {
     var req, s, head, baseElement, dataMain, src,
@@ -602,6 +606,9 @@ var requirejs, require, define;
         function breakCycle(mod, traced, processed) {
             var id = mod.map.id;
 
+	    // XXX peterham: debugging
+	    console.log("require: breakCycle()");
+
             if (mod.error) {
                 mod.emit('error', mod.error);
             } else {
@@ -637,6 +644,9 @@ var requirejs, require, define;
                 stillLoading = false,
                 needCycleCheck = true;
 
+	    // XXX peterham: debugging
+	    console.log("require: checkLoaded()");
+
             //Do not bother if this call was a result of a cycle break.
             if (inCheckLoaded) {
                 return;
@@ -670,6 +680,10 @@ var requirejs, require, define;
                             removeScript(modId);
                         }
                     } else if (!mod.inited && mod.fetched && map.isDefine) {
+
+			// XXX peterham: debugging
+			console.log("require: stillLoading()");
+
                         stillLoading = true;
                         if (!map.prefix) {
                             //No reason to keep looking for unfinished
@@ -684,6 +698,10 @@ var requirejs, require, define;
             });
 
             if (expired && noLoads.length) {
+
+		// XXX peterham: debugging
+		console.log("require: expired");
+
                 //If wait time expired, throw error of unloaded modules.
                 err = makeError('timeout', 'Load timeout for modules: ' + noLoads, null, noLoads);
                 err.contextName = context.contextName;
@@ -818,7 +836,12 @@ var requirejs, require, define;
             load: function () {
                 var url = this.map.url;
 
+
+		// XXX peterham: debugging
+		console.log("require: req.load()");
+
                 //Regular dependency.
+
                 if (!urlFetched[url]) {
                     urlFetched[url] = true;
                     context.load(this.map.id, url);
@@ -830,6 +853,10 @@ var requirejs, require, define;
              * define it.
              */
             check: function () {
+
+	    // XXX peterham: debugging
+	    console.log("require: check()");
+
                 if (!this.enabled || this.enabling) {
                     return;
                 }
@@ -1398,6 +1425,8 @@ var requirejs, require, define;
 
                     //Mark all the dependencies as needing to be loaded.
                     context.nextTick(function () {
+			// XXX peterham: debugging
+			console.log("nextTick():");
                         //Some defines could have been added since the
                         //require call, collect them.
                         intakeDefines();
@@ -1412,6 +1441,8 @@ var requirejs, require, define;
                             enabled: true
                         });
 
+			// XXX peterham
+			console.log("XXX before checkLoaded()");
                         checkLoaded();
                     });
 
@@ -1505,6 +1536,10 @@ var requirejs, require, define;
              * @param {String} moduleName the name of the module to potentially complete.
              */
             completeLoad: function (moduleName) {
+
+	    // XXX peterham: debugging
+	    console.log("require: completeLoad()");
+
                 var found, args, mod,
                     shim = getOwn(config.shim, moduleName) || {},
                     shExports = shim.exports;
@@ -1689,6 +1724,9 @@ var requirejs, require, define;
      */
     req = requirejs = function (deps, callback, errback, optional) {
 
+	    // XXX peterham: debugging
+	    console.log("require: requirejs()");
+
         //Find the right context, use default
         var context, config,
             contextName = defContextName;
@@ -1737,9 +1775,33 @@ var requirejs, require, define;
      * that have a better solution than setTimeout.
      * @param  {Function} fn function to execute later.
      */
-    req.nextTick = typeof setTimeout !== 'undefined' ? function (fn) {
+    // XXX peterham: debugging
+
+    var setTimeoutType = typeof setTimeout;
+    var setTimeoutDefined = setTimeoutType !== 'undefined';
+
+    console.log("typeof setTimeout: " + setTimeoutType);
+
+    var setTimeoutDefined = (setTimeoutType !== 'undefined');
+
+    var useSetTimeoutFcn = function (fn) {
         setTimeout(fn, 4);
-    } : function (fn) { fn(); };
+    } ;
+
+    var immediateFcn = function (fn) { fn(); };
+
+    var fcnToUse;
+
+    if (setTimeoutDefined) {
+	fncToUse = useSetTimeoutFcn;
+    }
+    else {
+	fcnToUse = immediateFcn;
+    };
+
+    req.nextTick = fcnToUse;
+    // XXX peterham: testing
+    req.nextTick = immediateFcn;
 
     /**
      * Export require as a global, but only if it does not already exist.
@@ -1882,6 +1944,8 @@ var requirejs, require, define;
             }
             currentlyAddingScript = null;
 
+	    // XXX peterham debugging
+	    console.log("returning from req.load");
             return node;
         } else if (isWebWorker) {
             try {
@@ -2051,4 +2115,11 @@ var requirejs, require, define;
 
     //Set up with config info.
     req(cfg);
+
+    // XXX peterham: performance debugging
+    console.log("end of req: cfg");
+
 }(this));
+
+// XXX peterham: performance debugging
+console.log("after requirejs()");
