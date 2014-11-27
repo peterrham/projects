@@ -92,16 +92,16 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	    console.log(5);
 	    polyline = moduleContext.polylineArray[i];
 	    ll.info("zoomToBoundingBox(): polyline == " + polyline);
+
+	    // XXX to much logging here, find a way to be more systematic about logging
 	    console.log(polyline.constructor);
 	    console.log(polyline.constructor.name);
 	    console.log(polyline);
 	    console.dir(polyline);
 
-
-	    
-	    polyline.getPath().forEach(function(e){//can't do polyline.getPath()[i] because it's a MVCArray
+	    polyline.getPath().forEach(function(e){
 		bounds.extend(e);
-	    })         
+	    })
 	}
 
 	map.fitBounds(bounds);
@@ -120,7 +120,7 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	span.style.cssText = 'position: relative; left: -50%; top: -10px; ' +
 	    'white-space: nowrap;color:#000000;' +
 	    'padding: 2px;font-family: Arial; font-weight: bold;' +
-	    'font-size: 30px;';
+	    'font-size: 15px;';
 	
 	var div = this.div_ = document.createElement('div');
 	div.appendChild(span);
@@ -213,6 +213,20 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	    position: position
 	    });
 	
+
+	var pinIcon = new google.maps.MarkerImage(
+//	    "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FFFF00",
+//	    "http://maps.google.com/mapfiles/marker.png",
+	    "largeTDBlueIcons/marker1.png",
+
+	    null, /* size is determined at runtime */
+	    null, /* origin is 0,0 */
+	    null, /* anchor is bottom center of the scaled image */
+	    new google.maps.Size(10,17)
+	);  
+
+	marker.setIcon(pinIcon);
+
 	var label = new Label({
 	    map: map
 	});
