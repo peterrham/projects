@@ -84,18 +84,28 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	
 	var polyline; 
 
-	for (var i = 0, len = gPolylineArray.length; i < len; i++) {
-	 	ll.info("zoomToBoundingBox(): i == " + i);
+	var bounds = new google.maps.LatLngBounds();
+
+	// XXX reaching into an object's context with a public member access, ok style?
+	for (var i = 0, len = moduleContext.polylineArray.length; i < len; i++) {
+	    ll.info("zoomToBoundingBox(): i == " + i);
 	    console.log(5);
-	    polyline = gPolylineArray[i];
-	    	ll.info("zoomToBoundingBox(): polyline == " + polyline);
+	    polyline = moduleContext.polylineArray[i];
+	    ll.info("zoomToBoundingBox(): polyline == " + polyline);
 	    console.log(polyline.constructor);
 	    console.log(polyline.constructor.name);
 	    console.log(polyline);
 	    console.dir(polyline);
-//	    console.log(polyline.getPosition());
-	    //	map.setCenter(currentLocation);
+
+
+	    
+	    polyline.getPath().forEach(function(e){//can't do polyline.getPath()[i] because it's a MVCArray
+		bounds.extend(e);
+	    })         
 	}
+
+	map.fitBounds(bounds);
+
     }
 
     // gmaps overlay stuff
