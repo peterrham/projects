@@ -16,6 +16,34 @@
 define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false', 'jquery-1.11.1', "local_javascript_utilities"], function(ll, gmaps, jquery, l) {
 
     ll.info("gmaps_calc_route");
+
+    // XXX I'm not sure of the best way to define a module local
+    // variable, either make this module in inside an immediate
+    // function, or else perhaps just like this, or maybe there's a
+    // provision for it in the requirejs module definition
+
+    var moduleContext = {
+	polylineArray: [], 
+    };
+
+    moduleContext.addPolyline = function (aPolyline) {
+	this.polylineArray.push(aPolyline);
+    };
+
+    moduleContext.cleanupPolylines = function () {
+
+	ll.info("cleanupPolylines()");
+
+	var polyline; 
+
+	for (var i = 0, len = this.polylineArray.length; i < len; i++) {
+	    polyline = this.polylineArray[i];
+	    polyline.setMap(null);
+	}
+
+	this.polylineArray = [];
+    };
+    
     function
     secondsToMinutes(seconds)
     {
@@ -31,12 +59,15 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
     var gPolylineArray = new Array();
 
 
+    function addToPolyLineArray(x)
+    {
+	gPolylineArray.push(x);
+    }
+
     function
     cleanUpPolylineArray()
     {
 	var polyline; 
-
-	// XXX should there be variable declarations for i and len?
 
 	for (var i = 0, len = gPolylineArray.length; i < len; i++) {
 	    polyline = gPolylineArray[i];
@@ -44,6 +75,27 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	}
 
 	gPolylineArray = new Array();
+    }
+
+    function zoomToBoundingBox()
+    {
+
+	ll.info("zoomToBoundingBox(): called");
+	
+	var polyline; 
+
+	for (var i = 0, len = gPolylineArray.length; i < len; i++) {
+	 	ll.info("zoomToBoundingBox(): i == " + i);
+	    console.log(5);
+	    polyline = gPolylineArray[i];
+	    	ll.info("zoomToBoundingBox(): polyline == " + polyline);
+	    console.log(polyline.constructor);
+	    console.log(polyline.constructor.name);
+	    console.log(polyline);
+	    console.dir(polyline);
+//	    console.log(polyline.getPosition());
+	    //	map.setCenter(currentLocation);
+	}
     }
 
     // gmaps overlay stuff
@@ -156,14 +208,14 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	});
 
 	// XXX need to change the name and use of global variable
-	gPolylineArray.push(marker);
+	addToPolyLineArray(marker);
 
 	label.bindTo('position', marker, 'position');
 	label.set('zIndex', 1234);
 	label.set('text', labelText);
 
 	// XXX is there a better way to clear this
-	gPolylineArray.push(label);
+	addToPolyLineArray(label);
     }
 
     function geocodePromise(geocoder, address){
@@ -442,7 +494,9 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
 	polyline.setMap(map);
 
-	gPolylineArray.push(polyline);
+	// the new way using a module object and segregating the
+	// different type of overlays to their own array in the module
+	moduleContext.addPolyline(polyline);
 
 	// assumes only one leg
 	var leg = result.routes[0].legs[0];
@@ -911,7 +965,13 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 			    addAddressToPanel(i + 1, response.routes[0].legs[numLegs - 1].end_address);
 			}
 		    });
-		})();
+
+		    ll.info("at the end of the batch");
+		    // try to zoom to the bounding box of all the lines, first try is to zoom to anything
+		    zoomToBoundingBox();
+		})
+		();
+		// end of iterating over the batch
 
 	    });
 
@@ -1003,6 +1063,10 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	summaryPanel.innerHTML += str;
     }
 
+
+    // XXX I'm not sure if this function calculates multiple legs or
+    // just a single leg, seems like a single leg, but I'm not sure
+
     function 
     calcRoute() 
     {
@@ -1010,7 +1074,9 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
 	
 	// XXX, not sure if I should be cleaning up the array or not and how to do so
-	// cleanUpPolylineArray();
+	cleanUpPolylineArray();
+
+	moduleContext.cleanupPolylines();
 
 	clearSummaryPanel();
 
@@ -1046,7 +1112,8 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	}
 
 	// experiment with various strategies
-
+	// XXX factoring out the strategy can be configured another way?, It's wasteful to create a direction strategy and not use it
+	
 	var directionsStrategy = new throttledDirectionsStrategy();
 	
 	directionsStrategy = new directDirectionsStrategy();
