@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+
+  <!-- 
+       Testing how javascript prototypes work
+
+       <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    -->
+
+  <head>
+
+
+  </head>
+
+  <body>
+    
+
+    <script>
+
+      var USGSOverlay = new Object();
+
+      console.log(USGSOverlay.prototype);
+
+      USGSOverlay.prototype = 6;
+
+      console.log(USGSOverlay);
+
+      console.log(USGSOverlay.prototype);
+
+    </script>
+    
+  </body>
+
+</html>
+
