@@ -3,14 +3,7 @@
   on Linux, but not as great on windows since there is no file
   extension and thus no assumption of ASCII as in unix
 
-- gmaps_single ....
-  - clear the previous route when generating a new one
-    11:25 am, 11:42 am, done, just required commenting something back in, but it will probably interfere with future batching work, ok for now
-    - get rid of the testing square image
-      done
-  - zoom to the entire route
-     working on this one: 8:40pm
+- assign a marker to each location along the route, not just the first one
+
   - remove double geolocation check 
   - do not go to chicago (default location) on the map first before going to the geocoded one
-  - get rid of ugly and large index numbers on route path
-

@@ -206,23 +206,37 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 
     }
 
-    function createMarkerWithLabel(map, position, labelText)
+    function createMarkerWithLabel(map, position, labelText) 
+    {
+	createMarkerWithLabelImage(map, position, "largeTDBlueIcons/blank.png", labelText);
+    }
+
+    function createMarkerWithNumber(map, position, num)
+    {
+	createMarkerWithLabelImage(map, position, "largeTDBlueIcons/marker" + num + ".png", "");
+    }
+
+    function createMarkerWithLabelImage(map, position, markerImageURL, labelText)
     {
     	var marker = new google.maps.Marker({
 	    map: map,
-	    position: position
+	    position: position,
+//	    draggable:true
 	    });
 	
 
 	var pinIcon = new google.maps.MarkerImage(
 //	    "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FFFF00",
 //	    "http://maps.google.com/mapfiles/marker.png",
-	    "largeTDBlueIcons/marker1.png",
-
+//	    "largeTDBlueIcons/marker" + labelText + ".png",
+//	    "https://maps.gstatic.com/mapfiles/markers2/marker_greenA.png", 
+//	    "https://maps.gstatic.com/mapfiles/markers2/marker_green1.png", 
+	    markerImageURL,
 	    null, /* size is determined at runtime */
 	    null, /* origin is 0,0 */
 	    null, /* anchor is bottom center of the scaled image */
-	    new google.maps.Size(10,17)
+//	    new google.maps.Size(20,34)
+	    null
 	);  
 
 	marker.setIcon(pinIcon);
@@ -298,9 +312,7 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	var chicago = new google.maps.LatLng(41.850033, -87.6500523);
 	
 	createMapWithCenterAt(chicago);
-
     }
-
 
     // XXX this makes an asynchronous call to getCurrentPosition, so I
     // need a promise, especially in the case where takes a long time
@@ -405,9 +417,6 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 		ll.info('without apply: homeAgain = ' + homeAgain);
 	    });
     }
-
-
-
     
     function initialize() {
 	ll.info("initialize():");
@@ -436,6 +445,7 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 			momLocation = result; 
 			ll.info("momLocation = " + momLocation);
 			createMarkerWithLabel(map, momLocation, mom);
+
 			return geocodePromise(geocoder, home);})
 		    .then(function (result) { 
 			homeLocation = result;
@@ -488,6 +498,8 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	}
     }
 
+    // XXX this is a key function and it's meaning has changed, not sure how many legs it is handling
+    // this is the next place to work
     function
     drawDirectionsPolyline(i, n, result)
     {
@@ -495,7 +507,7 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	var polyline = new google.maps.Polyline({
 	    path: [],
 	    strokeColor: '#0000FF',
-	    strokeWeight: 5
+	    strokeWeight: 2 // 5 was too thick
 	});
 
 	if (!result) {
@@ -522,18 +534,18 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	// different type of overlays to their own array in the module
 	moduleContext.addPolyline(polyline);
 
-	// assumes only one leg
-	var leg = result.routes[0].legs[0];
+	// XXX, before, assumes only one leg
+//	var leg = result.routes[0].legs[0];
+	
+	// iterate over the legs
+	var legs = result.routes[0].legs;
 
-	createMarkerWithLabel(map, leg.start_location, (i+1).toString());
+	$(legs).each(function(index, leg) {
+	    createMarkerWithNumber(map, leg.start_location, index + 1);
+	});
 
-	// decide to draw the destination or not, since we are doing this in a loop
+	createMarkerWithNumber(map, legs[legs.length-1].end_location, legs.length + 1);
 
-	if (i == (n - 2)) {
-	    ll.info("last one");
-
-	    createMarkerWithLabel(map, leg.end_location, (i+2).toString());
-	}
     }
 
     function
@@ -809,9 +821,9 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	this.execute = 
 	    function(my_lines) 
 	{
-	    var max_gmaps_waypoints = 8;
-
 	    ll.info("use batchDirectionsStrategy");
+
+	    var max_gmaps_waypoints = 8;
 
 	    var n = my_lines.length;
 
@@ -1096,7 +1108,6 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
     {
 	ll.info("inside calcRoute()");
 
-	
 	// XXX, not sure if I should be cleaning up the array or not and how to do so
 	cleanUpPolylineArray();
 
