@@ -16,7 +16,7 @@ def main():
     # Execute the RPC synchronously.
     resp = datastore.begin_transaction(req)
     # Get the transaction handle from the response.
-#    tx = resp.transaction
+
     # Create a RPC request to get entities by key.
     req = datastore.LookupRequest()
     # Create a new entity key.
@@ -31,13 +31,13 @@ def main():
     req.key.extend([key])
     # Set the transaction, so we get a consistent snapshot of the
     # entity at the time the transaction started.
- #   req.read_options.transaction = tx
+
     # Execute the RPC and get the response.
     resp = datastore.lookup(req)
     # Create a RPC request to commit the transaction.
-#    req = datastore.CommitRequest()
+
     # Set the transaction to commit.
-# seems like I can remove this    req.transaction = tx
+
     if resp.found:
       print "found"
     else:
