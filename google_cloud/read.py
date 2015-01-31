@@ -4,10 +4,27 @@
 
 import logging
 import sys
+import time
 
 import googledatastore as datastore
 
+def measureTime(a):
+    start = time.time()
+#    print start
+    a()
+    elapsed = time.time()
+#    print elapsed
+    elapsed = elapsed - start
+    print "Time spent in (function name) is: ", elapsed
+ #   print ("%.5f" % elapsed)
+#    print time.time()
+
+
 def main():
+  for x in range(0, 3):
+    measureTime(tryit)
+
+def tryit():
 
   datastore.set_options(dataset='glowing-thunder-842')
   try:
