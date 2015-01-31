@@ -1,4 +1,4 @@
-# purpose of this test program is to lookup a key without a
+# XXX purpose of this test program is to lookup a key without a
 # transaction if it is possible to do that with datastore for
 # simplicity, performance and undestanding
 
