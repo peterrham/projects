@@ -1,0 +1,3 @@
+protobuf==2.5.0
+oauth2client==1.2
+uritemplate==0.6
