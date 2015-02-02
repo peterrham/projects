@@ -5,8 +5,15 @@
 import logging
 import sys
 import time
+import httplib2
+
+# will log to console explicit detail of the request and response
+httplib2.debuglevel = 2
+
 
 import googledatastore as datastore
+
+datastore.set_options(host='https://www.googleapis.com', dataset='glowing-thunder-842')
 
 def measureTime(a):
     start = time.time()
@@ -19,19 +26,30 @@ def measureTime(a):
  #   print ("%.5f" % elapsed)
 #    print time.time()
 
-
 def main():
-  for x in range(0, 3):
+  measureit()
+
+def measureit():
+  measureTime(measureN)
+
+def empty():
+    pass
+
+def measureN():
+#  ntimes = 100
+  ntimes = 1
+  for x in range(0, ntimes):
+    # XXX can I do this recursively?
     measureTime(tryit)
+#    measureTime(empty)
 
 def tryit():
-
-  datastore.set_options(dataset='glowing-thunder-842')
   try:
+
     # Create a RPC request to begin a new transaction.
-    req = datastore.BeginTransactionRequest()
+    # XXX req = datastore.BeginTransactionRequest()
     # Execute the RPC synchronously.
-    resp = datastore.begin_transaction(req)
+#XXX    resp = datastore.begin_transaction(req)
     # Get the transaction handle from the response.
 
     # Create a RPC request to get entities by key.
@@ -56,7 +74,8 @@ def tryit():
     # Set the transaction to commit.
 
     if resp.found:
-      print "found"
+#      print "found"
+        pass
     else:
       print "missing"
 
