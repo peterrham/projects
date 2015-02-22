@@ -1,0 +1,4 @@
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-off)
+(setq ansi-color-names-vector
+  ["black" "red" "green" "yellow" "PaleBlue" "magenta" "cyan" "white"])

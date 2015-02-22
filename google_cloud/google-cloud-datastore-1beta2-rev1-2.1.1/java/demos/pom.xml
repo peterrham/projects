@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.google.apis</groupId>
+  <artifactId>google-api-services-datastore-protobuf-demos</artifactId>
+  <packaging>jar</packaging>
+  <name>google-api-services-datastore-protobuf-demos</name>
+  <url>https://github.com/GoogleCloudPlatform/google-cloud-datastore</url>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-datastore-protobuf</artifactId>
+      <version>v1beta2-rev1-2.1.0</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.ning.maven.plugins</groupId>
+        <artifactId>maven-duplicate-finder-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  <parent>
+    <groupId>com.google.apis</groupId>
+    <artifactId>google-api-services-datastore-protobuf-parent</artifactId>
+    <version>v1beta2-rev1-2.1.0</version>
+  </parent>
+</project>

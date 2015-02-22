@@ -1,0 +1,44 @@
+connect: (metadata.google.internal, 80) ************
+send: 'GET /0.1/meta-data/service-accounts/default/acquire?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdatastore%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email HTTP/1.1\r\nHost: metadata.google.internal\r\naccept-encoding: gzip, deflate\r\nuser-agent: Python-httplib2/0.9 (gzip)\r\n\r\n'
+reply: 'HTTP/1.1 200 OK\r\n'
+header: Metadata-Flavor: Google
+header: Content-Type: application/json
+header: Content-Encoding: gzip
+header: Date: Mon, 02 Feb 2015 23:48:32 GMT
+header: Server: Metadata Server for VM
+header: Cache-Control: private
+header: Content-Length: 153
+header: X-XSS-Protection: 1; mode=block
+header: X-Frame-Options: SAMEORIGIN
+send: 'GET /0.1/meta-data/service-accounts/default/acquire?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdatastore%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email HTTP/1.1\r\nHost: metadata.google.internal\r\naccept-encoding: gzip, deflate\r\nauthorization: Bearer ya29.DgGy-gNXa_19YNyrtbP_oHzOyR2RO1CF_oO-dbPcH0gd5gt2hSsCOPmMBGfPGLkZ03iCA2fgVp6i2Q\r\nuser-agent: Python-httplib2/0.9 (gzip)\r\n\r\n'
+reply: 'HTTP/1.1 200 OK\r\n'
+header: Metadata-Flavor: Google
+header: Content-Type: application/json
+header: Content-Encoding: gzip
+header: Date: Mon, 02 Feb 2015 23:48:33 GMT
+header: Server: Metadata Server for VM
+header: Cache-Control: private
+header: Content-Length: 153
+header: X-XSS-Protection: 1; mode=block
+header: X-Frame-Options: SAMEORIGIN
+connect: (www.googleapis.com, 443)
+send: 'POST /datastore/v1beta2/datasets/glowing-thunder-842/lookup HTTP/1.1\r\nHost: www.googleapis.com\r\ncontent-length: 27\r\ncontent-type: application/x-protobuf\r\naccept-encoding: gzip, deflate\r\nauthorization: Bearer ya29.DgGy-gNXa_19YNyrtbP_oHzOyR2RO1CF_oO-dbPcH0gd5gt2hSsCOPmMBGfPGLkZ03iCA2fgVp6i2Q\r\nuser-agent: Python-httplib2/0.9 (gzip)\r\n\r\n\x1a\x19\x12\x17\n\x0ckindlooptest\x1a\x07ebadbec'
+reply: 'HTTP/1.1 200 OK\r\n'
+header: Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+header: Pragma: no-cache
+header: Expires: Fri, 01 Jan 1990 00:00:00 GMT
+header: Date: Mon, 02 Feb 2015 23:48:33 GMT
+header: Content-Disposition: attachment
+header: ETag: "Ia_b-6JgywUHVES3yCJkmPpNIGM/cBYZaYj2ogjmnfsm9402XJe0--w"
+header: Vary: Origin
+header: Vary: X-Origin
+header: Content-Type: application/x-protobuf
+header: Content-Encoding: gzip
+header: X-Content-Type-Options: nosniff
+header: X-Frame-Options: SAMEORIGIN
+header: X-XSS-Protection: 1; mode=block
+header: Server: GSE
+header: Alternate-Protocol: 443:quic,p=0.02
+header: Transfer-Encoding: chunked
+Time spent in (function name) is:  0.077241897583
+Time spent in (function name) is:  0.0772528648376
