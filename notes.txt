@@ -76,3 +76,9 @@ ome/peterham/projects/projects/asrcws_dynamodb/jdk1.8.0_31/bin/java -Dfile.encod
 # this class path someone enables logging with the log4j.properties file in the current working directory
 
 java -classpath ".:./d_query.jar" com.amazonaws.codesamples.GettingStartedTryQuery
+
+# start the web server		  
+ruby local_ruby_webrick_web_server.rb
+
+does not currently work for some reason; currently w are using apache and port:80
+http://localhost/gmaps_single_route_turn_by_turn.html
