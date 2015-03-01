@@ -38,7 +38,7 @@ scp -i free_tier_key_1.pem test_workspace/d_query.jar  ubuntu@52.0.7.220:/tmp
   it will print the command line it uses when calling jar
 
 # this is success! it's 29 milliseconds I would like single digit but this is a good start
-# this is already better than I was able to achieve with google compute engine and google datastore
+# this is already better than I was able to achieve with google compute engine and google datastor
 
 ubuntu@ip-172-31-38-138:/tmp$ java -jar *.jar
 inside main
@@ -72,5 +72,7 @@ ome/peterham/projects/projects/asrcws_dynamodb/jdk1.8.0_31/bin/java -Dfile.encod
 /home/peterham/aws-java-sdk/1.9.19/third-party/aspectj-1.6/aspectjrt.jar
 /home/peterham/aws-java-sdk/1.9.19/third-party/aspectj-1.6/aspectjweaver.jar
 /home/peterham/projects/projects/aws_dynamodb/test_workspace/project_dynamodb_test/libs/apache-log4j-1.2.17/log4j-1.2.17.jar com.amazonaws.codesamples.GettingStartedTryQuery
+
+# this class path someone enables logging with the log4j.properties file in the current working directory
 
 java -classpath ".:./d_query.jar" com.amazonaws.codesamples.GettingStartedTryQuery
