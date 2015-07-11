@@ -1,0 +1,10 @@
+# sudo docker --version=true --debug=true --log-level=debug run --name a1b19d52ae9c --interactive=true sh
+# sudo docker --version run -i a1b19d52ae9c sh bogus
+# sudo docker --version run -i a1b19d52ae9c
+sudo docker run -i ce233d4b814e sh
+
+# sudo docker run -i ce233d4b814e sh
+# sudo docker run -i ce233d4b814e sh
+sudo docker run -i ce233d4b814e ls
+
+# docker run -it bigtable-hbase
