@@ -1,7 +1,9 @@
 require "mysql"
-my = Mysql::new("localhost", "root", "peterham", "database_test", 8243)
+# my = Mysql::new("localhost", "root", "peterham", "database_test", 8243)
+my = Mysql::new("testinstance.chjyl8qgo4vp.us-west-1.rds.amazonaws.com", "peterham", "peterham", "testdb", 3306)
+n = 100
 
-n = 10
+puts "n = " + n.to_s
 
 t1 = Time.now
 
@@ -24,4 +26,4 @@ puts total_ms
 
 avg_ms = total_ms / n
 
-puts avg_ms
+puts "avg in ms = " + avg_ms.to_s
