@@ -498,15 +498,41 @@ define(['loglevel', 'async!https://maps.googleapis.com/maps/api/js?v=3.exp&senso
 	}
     }
 
+// XXX PRH, how can I draw the lines in progressive color spectrum, or perhaps line width:
+/*
+
+http://www.livephysics.com/physical-constants/optics-pc/wavelength-colors/
+
+Approximate wavelength For the various colors
+
+Color	Wavelength (nm)
+Red	780 - 622
+Red	780 - 622
+Orange	622 - 597
+Yellow	597 - 577
+Green	577 - 492
+Blue	492 - 455
+Violet	455 - 390
+
+1 Angstrom = 10-10 meters. 
+*/
     // XXX this is a key function and it's meaning has changed, not sure how many legs it is handling
     // this is the next place to work
     function
     drawDirectionsPolyline(i, n, result)
     {
 
+	var hue = 360 * (i/n);
+	var hueStr = 'hsl(' + hue + ',100%,50%)';
+
 	var polyline = new google.maps.Polyline({
 	    path: [],
-	    strokeColor: '#0000FF',
+	    // blue
+//XXX PRH	    strokeColor: '#0000FF',
+
+	    // red
+	    strokeColor: '#FF0000',
+	    strokeColor: hueStr,
 	    strokeWeight: 2 // 5 was too thick
 	});
 
