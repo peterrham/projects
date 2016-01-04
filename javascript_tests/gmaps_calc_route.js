@@ -522,6 +522,9 @@ Violet	455 - 390
     drawDirectionsPolyline(i, n, result)
     {
 
+	var hue = 360 * (i/n);
+	var hueStr = 'hsl(' + hue + ',100%,50%)';
+
 	var polyline = new google.maps.Polyline({
 	    path: [],
 	    // blue
@@ -529,13 +532,7 @@ Violet	455 - 390
 
 	    // red
 	    strokeColor: '#FF0000',
-
-	    var hue = 360 * (i/n);
-
-	    hueStr = 'hsl(' + hue + ',100%,50%)';
-
-	    strokeColor: hueStr;
-	    
+	    strokeColor: hueStr,
 	    strokeWeight: 2 // 5 was too thick
 	});
 
