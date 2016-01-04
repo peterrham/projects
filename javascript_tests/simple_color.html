@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+  body {background-color:lightgray}
+  h1   {color:blue}
+  p    {color:green}
+  canvas {
+    background: #f1f1f1;
+  }
+</style>
+
+<script src="jquery-1.11.1.js"></script>
+
+</head>
+
+<body>
+  <h1>This is a heading</h1>
+  <p>Simple</p>
+
+<canvas id="canvas" width="500" height="500"></canvas>
+
+<script>
+
+var can = $('#canvas')[0],
+    ctx = can.getContext('2d');
+
+for (x = 0; x <= can.width; x+=1) {
+
+//    h = new_end-(x-new_start)/(new_end-new_start) * new_end;
+
+    s = '100%';
+    l = '50%';
+    h = 360 * (x/can.width);    
+    ctx.fillStyle = 'hsl('+ h + ',100%,50%)';
+    ctx.fillRect(x, 0, x+1, can.height);
+}
+			 
+</script>
+
+</body>
+
+</html>
+
