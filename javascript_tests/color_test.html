@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+  body {background-color:lightgray}
+  h1   {color:blue}
+  p    {color:green}
+  canvas {
+    background: #f1f1f1;
+  }
+</style>
+
+<script src="jquery-1.11.1.js"></script>
+
+</head>
+
+<body>
+  <h1>This is a heading</h1>
+  <p>This is a paragraph.</p>
+
+<canvas id="canvas" width="200" height="200"></canvas>
+
+<script>
+
+var can = $('#canvas')[0],
+    ctx = can.getContext('2d'),
+    radius = 120,
+    thickness = 80,
+    p = {
+        x: can.width,
+        y: can.height
+    },
+    start = Math.PI,
+    end = start + Math.PI / 2,
+    step = Math.PI / 180,
+    ang = 0,
+    grad,
+    r = 0,
+    g = 0,
+    b = 0,
+    pct = 0;
+
+ctx.translate(p.x, p.y);
+
+for (ang = start; ang <= end; ang += step) {
+    ctx.save();
+    ctx.rotate(-ang);
+    grad = ctx.createLinearGradient(0, radius - thickness, 0, radius);
+    grad.addColorStop(0, 'black');
+
+    h = 360-(ang-start)/(end-start) * 360;
+    s = '100%';
+    l = '50%';
+    
+    grad.addColorStop(.5, 'hsl('+[h,s,l].join()+')');
+    grad.addColorStop(1, 'white');
+    ctx.fillStyle = grad;
+
+    ctx.fillRect(0, radius - thickness, 3, thickness);
+    ctx.restore();
+}
+
+//Knockout
+ctx.beginPath();
+ctx.arc(p.x, p.y, radius - thickness, 0, 2 * Math.PI);
+ctx.fillStyle = '#f1f1f1';
+ctx.fill();
+</script>
+
+</body>
+
+</html>
+
