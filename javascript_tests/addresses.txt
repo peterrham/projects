@@ -1,0 +1,55 @@
+7047 Silent Barn Turnabout, Hanging Limb, WA, 98915-1351, US, (360) 551-4046
+3727 Thunder Towers, Shacktown, WA, 98428-1350, US, (425) 252-5303
+1439 Lazy Robin Harbour, Frost Town, WA, 98068-4776, US, (253) 142-4364
+307 Shady Rise Ramp, Rosthern, WA, 98002-4589, US, (253) 209-4387
+965 Grand Shadow Mews, Semitropic, WA, 99266-2466, US, (253) 165-8104
+9778 Umber Village, Money, WA, 99372-8291, US, (253) 220-2580
+4123 Misty Nook, Ono, WA, 98951-4191, US, (509) 023-5888
+2486 Broad Nectar Meadow, Lost Bridge Village, WA, 99106-7270, US, (253) 523-1488
+7082 Red Apple Hill, Town Pump, WA, 98170-6280, US, (509) 828-0732
+2892 High Spring Crest, Blacklick, WA, 98391-4670, US, (206) 392-4576
+6548 Clear Byway, Gretna, WA, 99415-2787, US, (509) 223-2120
+3673 Emerald Brook Manor, Honey Hole, WA, 98741-2157, US, (206) 906-8728
+6873 Cotton Pioneer Pines, Lickville, WA, 98109-2958, US, (360) 798-7032
+8168 Hidden Maze, St. Charles, WA, 99165-1150, US, (509) 690-9828
+850 Amber Panda Thicket, Noon, WA, 99222-8995, US, (425) 850-3525
+5912 Dewy Butterfly Carrefour, Dingy, WA, 98983-4459, US, (425) 454-4294
+6354 Quaking View Abbey, Merry Midnight, WA, 98814-4442, US, (360) 942-8762
+5449 Fallen Vista, Black Earth, WA, 99425-3516, US, (253) 381-3144
+9672 Dusty Loop, Hurricane Shoals, WA, 98408-6783, US, (425) 925-3043
+7434 Bright Mountain Orchard, Bug, WA, 98918-9372, US, (360) 299-0569
+4187 Honey Grove Point, Mendham, WA, 99494-3096, US, (206) 107-8157
+978 Crystal Crossing, The Pas, WA, 98273-4035, US, (509) 390-6562
+7339 Jagged Lake Front, Humansville, WA, 99364-3627, US, (206) 597-0651
+3551 Sunny Dale By-pass, Pakachoag, WA, 98463-3144, US, (360) 418-3204
+8268 Rustic Timber Corner, Bean Rock, WA, 98651-7176, US, (253) 646-8826
+1626 Blue Creek Vale, Burnt Woods, WA, 99263-4189, US, (425) 621-4836
+8357 Green Wagon Quay, Lafleche, WA, 98301-4240, US, (360) 288-7672
+7506 Cinder Hills Subdivision, Opportunity, WA, 98347-6338, US, (206) 768-2572
+3305 Sleepy Bluff Valley, Smartville, WA, 98648-2221, US, (509) 055-2104
+1417 Rocky Drive, Crab Town, WA, 99456-5304, US, (425) 443-5291
+
+('7434 Bright Mountain Orchard', 'Bug', 'WA', '98918-9372', 'US', '(360) 299-0569'),
+('4187 Honey Grove Point', 'Mendham', 'WA', '99494-3096', 'US', '(206) 107-8157'),
+('978 Crystal Crossing', 'The Pas', 'WA', '98273-4035', 'US', '(509) 390-6562'),
+('7339 Jagged Lake Front', 'Humansville', 'WA', '99364-3627', 'US', '(206) 597-0651'),
+('3551 Sunny Dale By-pass', 'Pakachoag', 'WA', '98463-3144', 'US', '(360) 418-3204'),
+('8268 Rustic Timber Corner', 'Bean Rock', 'WA', '98651-7176', 'US', '(253) 646-8826'),
+('1626 Blue Creek Vale', 'Burnt Woods', 'WA', '99263-4189', 'US', '(425) 621-4836'),
+('8357 Green Wagon Quay', 'Lafleche', 'WA', '98301-4240', 'US', '(360) 288-7672'),
+('7506 Cinder Hills Subdivision', 'Opportunity', 'WA', '98347-6338', 'US', '(206) 768-2572'),
+('3305 Sleepy Bluff Valley', 'Smartville', 'WA', '98648-2221', 'US', '(509) 055-2104'),
+('1417 Rocky Drive', 'Crab Town', 'WA', '99456-5304', 'US', '(425) 443-5291');
+SQL Create Table
+
+SQL TABLE: SELECT ALL
+CREATE TABLE `addresses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `street` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

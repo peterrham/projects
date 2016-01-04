@@ -1,0 +1,14 @@
+- tasks that have been completed:
+
+- gmaps_single ....
+  - clear the previous route when generating a new one
+    11:25 am, 11:42 am, done, just required commenting something back in, but it will probably interfere with future batching work, ok for now
+    - get rid of the testing square image
+      done
+  - done - zoom to the entire route
+     working on this one: 8:40pm
+   - done, the zooming does not seem perfect, but pretty good and much better, than before
+
+  - get rid of ugly and large index numbers on route path
+    - i made soe improvements here, but it still does not loo great
+

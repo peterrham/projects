@@ -20,3 +20,14 @@ on windows remote talking to s3 via beanstalk:
 
 - internet explorer loads the right in series which is great
 
+- here's the metrics before optimizing with optimap (which took a long time, maybe around 5 minutes
+
+Minutes (total): 463.0
+Distance (miles) (total): 271.9
+Speed (miles per hour): 35.2
+
+-- after optimizing with optimap (almost 1/4 of the time)
+
+Minutes (total): 160.7
+Distance (miles) (total): 62.9
+Speed (miles per hour): 23.5
