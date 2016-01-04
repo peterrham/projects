@@ -18,26 +18,82 @@
 
 <body>
   <h1>This is a heading</h1>
-  <p>Simple</p>
+  <p>Next</p>
 
 <canvas id="canvas" width="500" height="500"></canvas>
 
 <script>
 
 var can = $('#canvas')[0],
-    ctx = can.getContext('2d');
+    ctx = can.getContext('2d'),
+    radius = 120,
+    thickness = 80,
+    p = {
+        x: can.width,
+        y: can.height
+    },
+    start = Math.PI,
+    end = start + Math.PI / 2,
+    step = Math.PI / 180,
+    ang = 0,
+    grad,
+    r = 0,
+    g = 0,
+    b = 0,
+    pct = 0;
 
-for (x = 0; x <= can.width; x+=1) {
+new_start = 0;
+new_end = 300;
+
+
+grad = ctx.createLinearGradient(0,150, 50, 200);
+// grad.addColorStop(0, 'red');
+//grad.addColorStop(0, 'hsl(180,100%,50%)');
+grad.addColorStop(0, 'magenta');
+//grad.addColorStop(1, 'hsl(360,100%,50%)');
+grad.addColorStop(1, 'red');
+ctx.fillStyle = grad;
+ctx.fillRect(0, 150, 50, 200);
+
+    ctx2 = can.getContext('2d');
+for (x = new_start; x <= new_end; x+=10) {
 
 //    h = new_end-(x-new_start)/(new_end-new_start) * new_end;
-
+    h = 120;
     s = '100%';
     l = '50%';
-    h = 360 * (x/can.width);    
-    ctx.fillStyle = 'hsl('+ h + ',100%,50%)';
-    ctx.fillRect(x, 0, x+1, can.height);
+    
+    ctx2.fillRect(x, 0, x+10, 100);
 }
 			 
+
+ctx.translate(p.x, p.y);
+
+
+for (ang = start; ang <= end; ang += step) {
+    ctx.save();
+    ctx.rotate(-ang);
+    grad = ctx.createLinearGradient(0, radius - thickness, 0, radius);
+    grad.addColorStop(0, 'black');
+
+    h = 360-(ang-start)/(end-start) * 360;
+    s = '100%';
+    l = '50%';
+    
+    grad.addColorStop(.5, 'hsl('+[h,s,l].join()+')');
+    grad.addColorStop(1, 'white');
+    ctx.fillStyle = grad;
+
+    ctx.fillRect(0, radius - thickness, 3, thickness);
+    ctx.restore();
+}
+
+//Knockout
+ctx.beginPath();
+ctx.arc(p.x, p.y, radius - thickness, 0, 2 * Math.PI);
+ctx.fillStyle = '#f1f1f1';
+ctx.fill();
+
 </script>
 
 </body>
